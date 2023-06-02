@@ -1,7 +1,7 @@
 @guest
 <div>
     {!! Form::label('cardID','打卡：')!!}
-    {!! Form::text('cardID',null,array('autofocus'))!!}
+    {!! Form::text('cardID',null,array('autofocus','placeholder'=>"請刷卡或輸入學號"))!!}
 </div>
 @else
 <div>

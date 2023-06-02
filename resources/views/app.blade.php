@@ -58,7 +58,7 @@
             padding: 0;
             max-width: 1200px;
             list-style: none;
-            font-size: 25px;
+            font-size: 20px;
 
         }
 
