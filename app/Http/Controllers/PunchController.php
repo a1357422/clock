@@ -14,6 +14,8 @@ class PunchController extends Controller
         $date = strval(date('n'));
         $users = User::Where('name','<>',"管理員")->get();
         $tags = [];
+        $totalmoneys = [];
+        $hourtags = [];
         foreach($users as $user){
             $hours = [];
             $minutes = [];
@@ -34,14 +36,18 @@ class PunchController extends Controller
             if($user->role == 1){
                 $totalhours += floor($totalminute/60)+3;
                 $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+                $money = $totalhours*176;
             }
             else{
                 $totalhours += floor($totalminute/60);
                 $text = $totalhours . "時" . $totalminute . "分"; 
+                $money = $totalhours*176;
             }
             $tags["$user->id"] = $text;
+            $totalmoneys["$user->id"] = $money;
+            $hourtags["$user->id"] = $totalhours;
         }
-        return view('punch.index',['users'=>$users,'date'=>$date,'tags'=>$tags]);
+        return view('punch.index',['users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
     public function show($id){
@@ -52,6 +58,8 @@ class PunchController extends Controller
         $minutes = [];
         $totalhours = 0;
         $totalminute = 0;
+        $totalmoneys = [];
+        $hourtags = [];
         foreach($punches as $punch){
             array_push($hours,substr($punch->time,0,1));
             array_push($minutes,mb_substr($punch->time,2,2));
@@ -66,13 +74,16 @@ class PunchController extends Controller
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
             $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+            $money = $totalhours*176;
         }
         else{
             $totalhours += floor($totalminute/60);
             $text = $totalhours . "時" . $totalminute . "分"; 
+            $money = $totalhours*176;
         }
-        
-        return view('punch.show', ['punches'=>$punches,'date'=>$date,'nameid'=>$id,'text'=>$text]);
+        $totalmoneys["$user->id"] = $money;
+        $hourtags["$user->id"] = $totalhours;
+        return view('punch.show', ['user'=>$user,'punches'=>$punches,'date'=>$date,'nameid'=>$id,'text'=>$text,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
     public function create(){
@@ -124,6 +135,8 @@ class PunchController extends Controller
         $minutes = [];
         $totalhours = 0;
         $totalminute = 0;
+        $totalmoneys = [];
+        $hourtags = [];
         foreach($punches as $punch){
             array_push($hours,substr($punch->time,0,1));
             array_push($minutes,mb_substr($punch->time,2,2));
@@ -138,13 +151,16 @@ class PunchController extends Controller
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
             $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+            $money = $totalhours*176;
         }
         else{
             $totalhours += floor($totalminute/60);
             $text = $totalhours . "時" . $totalminute . "分"; 
+            $money = $totalhours*176;
         }
-
-        return view("punch.show",['punches'=>$punches,'selectname'=>$request->input('name'),'date'=>$request->input('month'),'text'=>$text,'nameid'=>$request->input('nameid')]);
+        $totalmoneys["$user->id"] = $money;
+        $hourtags["$user->id"] = $totalhours;
+        return view("punch.show",['user'=>$user,'punches'=>$punches,'selectname'=>$request->input('name'),'date'=>$request->input('month'),'text'=>$text,'nameid'=>$request->input('nameid'),'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
     public function store(Request $request){
