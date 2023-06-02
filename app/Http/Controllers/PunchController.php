@@ -102,6 +102,14 @@ class PunchController extends Controller
         return view('punch.create', ['punches'=>$punches,'tags'=>$tags]);
     }
 
+    public function createuserdata($id){
+        $punches = Punch::Where('nameid',$id)->latest()->get();
+        $user = User::findOrFail($id);
+        $tags = [];
+        $tags["$user->id"] = $user->name;
+        return view('punch.create2', ['punches'=>$punches,'tags'=>$tags]);
+    }
+
     public function edit($id){
         $punch = Punch::where('id',$id)->first();
         $selectPunch_in = $punch->punch_in;
@@ -267,11 +275,111 @@ class PunchController extends Controller
         return redirect('punch/create');
     }
 
+    public function store2(Request $request){
+        if (Auth::check()) {
+            $date = $request->input('date');
+            $month = substr($date,5,2);
+            $day = substr($date,8,2);
+            if(substr($month,0,1)=='0')
+                $month = substr($month,1,1);
+            if(substr($day,0,1)=='0')
+                $day = substr($day,1,1);
+            $hour1 = intval(substr($request->input('punch_in'),0,2));
+            $hour2 = intval(substr($request->input('punch_out'),0,2));
+            $minute1 = intval(substr($request->input('punch_in'),3,5));
+            $minute2 = intval(substr($request->input('punch_out'),3,5));
+            $totalhour = $hour2-$hour1;
+            $totalminute = $minute2-$minute1;
+            if($totalhour < 0){
+                $totalhour = 0;
+                $totalminute = 0;
+            }
+            if($totalminute < 0)
+                $totalminute = 0;
+            $punch = Punch::create([
+                'date' => $month.'/'.$day,
+                'nameid' => $request->input('name'),
+                'punch_in' => $request->input('punch_in'),
+                'punch_out' => $request->input('punch_out'),
+                'time' => strval($totalhour)."時".strval($totalminute)."分",
+                'mark' => 1
+            ]);   
+        }
+        else{
+            $cradID = $request->input('cardID');
+            $user = User::where('cardID',$cradID)->first();
+            if($user != null){
+                $check = Punch::Where('nameid',$user->id)->latest()->first();
+                if($check == null){
+                    $punch_in = null;
+                    $punch_out = null;
+                }
+                else{
+                    $punch_in = $check->punch_in;
+                    $punch_out = $check->punch_out;
+                }
+                if($punch_in == null || ($punch_in != null && $punch_out != null)){
+                    $punch = Punch::create([
+                        'date' => date('n/j'),
+                        'nameid' => $user->id,
+                        'punch_in' => date("H:i")
+                    ]);
+                }
+                else{
+                    $punch = Punch::findOrFail($check->id);
+                    $punch->punch_out = date("H:i");
+                    $punch->save();
+                    $created_at = $punch->created_at->format('H:i:s');
+                    $updated_at = $punch->updated_at->format('H:i:s');
+                    $hour = floor((strtotime($updated_at)-strtotime($created_at))%86400/3600);
+                    $minute = floor((strtotime($updated_at)-strtotime($created_at))%86400/60);
+                    $punch->time = $hour."時".$minute."分";
+                    $punch->save();
+                }
+            }
+            else{
+                $user = User::where('studentID',$cradID)->first();
+                if($user == null) 
+                    return redirect('punch/create')->with('success', '查無卡號，請重試，或使用學號');
+                else{
+                    $check = Punch::Where('nameid',$user->id)->latest()->first();
+                    if($check == null){
+                        $punch_in = null;
+                        $punch_out = null;
+                    }
+                    else{
+                        $punch_in = $check->punch_in;
+                        $punch_out = $check->punch_out;
+                    }
+                    if($punch_in == null || ($punch_in != null && $punch_out != null)){
+                        $punch = Punch::create([
+                            'date' => date('n/j'),
+                            'nameid' => $user->id,
+                            'punch_in' => date("H:i")
+                        ]);
+                    }
+                    else{
+                        $punch = Punch::findOrFail($check->id);
+                        $punch->punch_out = date("H:i");
+                        $punch->save();
+                        $created_at = $punch->created_at->format('H:i:s');
+                        $updated_at = $punch->updated_at->format('H:i:s');
+                        $hour = floor((strtotime($updated_at)-strtotime($created_at))%86400/3600);
+                        $minute = floor((strtotime($updated_at)-strtotime($created_at))%86400/60);
+                        $punch->time = $hour."時".$minute."分";
+                        $punch->save();
+                    }
+                }   
+            }
+        }
+        return redirect()->back();
+    }
+
     public function destroy($id,$punchid){
         $punch = Punch::findOrFail($punchid);
         $punch->delete();
 
-        return redirect()->action([PunchController::class, 'show'],['id'=>$id]);
+        return redirect()->back();
     }
 
 }

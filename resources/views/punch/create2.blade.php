@@ -11,7 +11,7 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    {!! Form::open(['url'=>'punch/store'])!!}
+    {!! Form::open(['url'=>'punch/store2'])!!}
     @include('punch.form',['submitButtonText'=>"打卡"])
     {!! Form::close()!!}
     <table class="table">
