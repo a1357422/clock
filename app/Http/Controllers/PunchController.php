@@ -229,11 +229,13 @@ class PunchController extends Controller
                     $punch = Punch::findOrFail($check->id);
                     $punch->punch_out = date("H:i");
                     $punch->save();
-                    $created_at = $punch->created_at->format('H:i:s');
-                    $updated_at = $punch->updated_at->format('H:i:s');
-                    $hour = floor((strtotime($updated_at)-strtotime($created_at))%86400/3600);
-                    $minute = floor((strtotime($updated_at)-strtotime($created_at))%86400/60);
-                    $punch->time = $hour."時".$minute."分";
+                    $hour1 = intval(substr($punch->punch_in,0,2));
+                    $hour2 = intval(substr($punch->punch_out,0,2));
+                    $minute1 = intval(substr($punch->punch_in,3,5));
+                    $minute2 = intval(substr($punch->punch_out,3,5));
+                    $totalhour = $hour2-$hour1;
+                    $totalminute = $minute2-$minute1;
+                    $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                     $punch->save();
                 }
             }
@@ -262,11 +264,13 @@ class PunchController extends Controller
                         $punch = Punch::findOrFail($check->id);
                         $punch->punch_out = date("H:i");
                         $punch->save();
-                        $created_at = $punch->created_at->format('H:i:s');
-                        $updated_at = $punch->updated_at->format('H:i:s');
-                        $hour = floor((strtotime($updated_at)-strtotime($created_at))%86400/3600);
-                        $minute = floor((strtotime($updated_at)-strtotime($created_at))%86400/60);
-                        $punch->time = $hour."時".$minute."分";
+                        $hour1 = intval(substr($punch->punch_in,0,2));
+                        $hour2 = intval(substr($punch->punch_out,0,2));
+                        $minute1 = intval(substr($punch->punch_in,3,5));
+                        $minute2 = intval(substr($punch->punch_out,3,5));
+                        $totalhour = $hour2-$hour1;
+                        $totalminute = $minute2-$minute1;
+                        $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                         $punch->save();
                     }
                 }   
@@ -329,11 +333,13 @@ class PunchController extends Controller
                     $punch = Punch::findOrFail($check->id);
                     $punch->punch_out = date("H:i");
                     $punch->save();
-                    $created_at = $punch->created_at->format('H:i:s');
-                    $updated_at = $punch->updated_at->format('H:i:s');
-                    $hour = floor((strtotime($updated_at)-strtotime($created_at))%86400/3600);
-                    $minute = floor((strtotime($updated_at)-strtotime($created_at))%86400/60);
-                    $punch->time = $hour."時".$minute."分";
+                    $hour1 = intval(substr($punch->punch_in,0,2));
+                    $hour2 = intval(substr($punch->punch_out,0,2));
+                    $minute1 = intval(substr($punch->punch_in,3,5));
+                    $minute2 = intval(substr($punch->punch_out,3,5));
+                    $totalhour = $hour2-$hour1;
+                    $totalminute = $minute2-$minute1;
+                    $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                     $punch->save();
                 }
             }
@@ -362,11 +368,13 @@ class PunchController extends Controller
                         $punch = Punch::findOrFail($check->id);
                         $punch->punch_out = date("H:i");
                         $punch->save();
-                        $created_at = $punch->created_at->format('H:i:s');
-                        $updated_at = $punch->updated_at->format('H:i:s');
-                        $hour = floor((strtotime($updated_at)-strtotime($created_at))%86400/3600);
-                        $minute = floor((strtotime($updated_at)-strtotime($created_at))%86400/60);
-                        $punch->time = $hour."時".$minute."分";
+                        $hour1 = intval(substr($punch->punch_in,0,2));
+                        $hour2 = intval(substr($punch->punch_out,0,2));
+                        $minute1 = intval(substr($punch->punch_in,3,5));
+                        $minute2 = intval(substr($punch->punch_out,3,5));
+                        $totalhour = $hour2-$hour1;
+                        $totalminute = $minute2-$minute1;
+                        $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                         $punch->save();
                     }
                 }   
