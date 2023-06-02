@@ -21,7 +21,10 @@
             <th>上班簽到時間</th>
             <th>上班簽退時間</th>
             <th>時數</th>
+            @guest
+            @else
             <th>刪除</th>
+            @endguest
         </tr>
         @foreach($punches as $punch)
         @guest
