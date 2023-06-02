@@ -16,6 +16,7 @@ class PunchController extends Controller
         $tags = [];
         $totalmoneys = [];
         $hourtags = [];
+        $total = 0;
         foreach($users as $user){
             $hours = [];
             $minutes = [];
@@ -47,7 +48,10 @@ class PunchController extends Controller
             $totalmoneys["$user->id"] = $money;
             $hourtags["$user->id"] = $totalhours;
         }
-        return view('punch.index',['users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
+        foreach($totalmoneys as $totalmoney){
+            $total += $totalmoney;
+        }
+        return view('punch.index',['users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags,'total'=>$total]);
     }
 
     public function show($id){

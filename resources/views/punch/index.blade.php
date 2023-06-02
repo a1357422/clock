@@ -28,6 +28,11 @@
             </td>
         </tr>
         @endforeach
+        <tr class='column_center'>
+            <td/>
+            <td align="center" valign="center"> <strong> 總薪資：</strong></td>
+            <td align="center" valign="center"> <strong> {{$total}}元</strong></td>
+        </tr>
     </table>
 </div>
 @endsection

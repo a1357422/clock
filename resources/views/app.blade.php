@@ -53,12 +53,12 @@
 
             background-color: #bdbbbb;
             /*背景顏色*/
-            font-family: "標楷體", sans-serif;
+            font-family: "微黑正軟體", sans-serif;
             margin: 0 auto;
             padding: 0;
             max-width: 1200px;
             list-style: none;
-            font-size: 18px;
+            font-size: 25px;
 
         }
 

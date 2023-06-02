@@ -18,7 +18,7 @@
 </div>
 <div>
     {!! Form::label('cardID','卡號')!!}
-    {!! Form::text('cardID',$selectCardID)!!}
+    {!! Form::text('cardID',$selectCardID,array('autofocus'))!!}
 </div>
 <div>
     學號：{{$selectStudentID}}
