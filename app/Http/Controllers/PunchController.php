@@ -128,6 +128,10 @@ class PunchController extends Controller
         $minute2 = intval(substr($punch->punch_out,3,5));
         $totalhour = $hour2-$hour1;
         $totalminute = $minute2-$minute1;
+        if($totalhour > 0 && $totalminute < 0){
+            $totalhour -= 1;
+            $totalminute = 60+$totalminute;
+        }
         if($totalhour < 0){
             $totalhour = 0;
             $totalminute = 0;
@@ -190,6 +194,10 @@ class PunchController extends Controller
             $minute2 = intval(substr($request->input('punch_out'),3,5));
             $totalhour = $hour2-$hour1;
             $totalminute = $minute2-$minute1;
+            if($totalhour > 0 && $totalminute < 0){
+                $totalhour -= 1;
+                $totalminute = 60+$totalminute;
+            }
             if($totalhour < 0){
                 $totalhour = 0;
                 $totalminute = 0;
@@ -235,6 +243,16 @@ class PunchController extends Controller
                     $minute2 = intval(substr($punch->punch_out,3,5));
                     $totalhour = $hour2-$hour1;
                     $totalminute = $minute2-$minute1;
+                    if($totalhour > 0 && $totalminute < 0){
+                        $totalhour -= 1;
+                        $totalminute = 60+$totalminute;
+                    }
+                    if($totalhour < 0){
+                        $totalhour = 0;
+                        $totalminute = 0;
+                    }
+                    if($totalminute < 0)
+                        $totalminute = 0;
                     $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                     $punch->save();
                 }
@@ -270,6 +288,16 @@ class PunchController extends Controller
                         $minute2 = intval(substr($punch->punch_out,3,5));
                         $totalhour = $hour2-$hour1;
                         $totalminute = $minute2-$minute1;
+                        if($totalhour > 0 && $totalminute < 0){
+                            $totalhour -= 1;
+                            $totalminute = 60+$totalminute;
+                        }
+                        if($totalhour < 0){
+                            $totalhour = 0;
+                            $totalminute = 0;
+                        }
+                        if($totalminute < 0)
+                            $totalminute = 0;
                         $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                         $punch->save();
                     }
@@ -294,6 +322,10 @@ class PunchController extends Controller
             $minute2 = intval(substr($request->input('punch_out'),3,5));
             $totalhour = $hour2-$hour1;
             $totalminute = $minute2-$minute1;
+            if($totalhour > 0 && $totalminute < 0){
+                $totalhour -= 1;
+                $totalminute = 60+$totalminute;
+            }
             if($totalhour < 0){
                 $totalhour = 0;
                 $totalminute = 0;
@@ -339,6 +371,16 @@ class PunchController extends Controller
                     $minute2 = intval(substr($punch->punch_out,3,5));
                     $totalhour = $hour2-$hour1;
                     $totalminute = $minute2-$minute1;
+                    if($totalhour > 0 && $totalminute < 0){
+                        $totalhour -= 1;
+                        $totalminute = 60+$totalminute;
+                    }
+                    if($totalhour < 0){
+                        $totalhour = 0;
+                        $totalminute = 0;
+                    }
+                    if($totalminute < 0)
+                        $totalminute = 0;
                     $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                     $punch->save();
                 }
@@ -374,6 +416,16 @@ class PunchController extends Controller
                         $minute2 = intval(substr($punch->punch_out,3,5));
                         $totalhour = $hour2-$hour1;
                         $totalminute = $minute2-$minute1;
+                        if($totalhour > 0 && $totalminute < 0){
+                            $totalhour -= 1;
+                            $totalminute = 60+$totalminute;
+                        }
+                        if($totalhour < 0){
+                            $totalhour = 0;
+                            $totalminute = 0;
+                        }
+                        if($totalminute < 0)
+                            $totalminute = 0;
                         $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                         $punch->save();
                     }
