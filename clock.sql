@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3306
--- 產生時間： 2023-06-02 03:22:01
+-- 產生時間： 2023-06-05 04:46:22
 -- 伺服器版本： 8.0.31
 -- PHP 版本： 8.0.26
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `clock`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `basesalary`
+--
+
+DROP TABLE IF EXISTS `basesalary`;
+CREATE TABLE IF NOT EXISTS `basesalary` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `basesalary` int NOT NULL DEFAULT '176' COMMENT '基本薪資',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `basesalary`
+--
+
+INSERT INTO `basesalary` (`id`, `basesalary`, `created_at`, `updated_at`) VALUES
+(1, 176, NULL, '2023-06-05 04:45:41');
 
 -- --------------------------------------------------------
 
@@ -52,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `migrations`
@@ -63,7 +85,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (37, '2014_10_12_100000_create_password_resets_table', 1),
 (38, '2019_08_19_000000_create_failed_jobs_table', 1),
 (39, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(40, '2023_05_26_155344_create_punchrecord_table', 1);
+(40, '2023_05_26_155344_create_punchrecord_table', 1),
+(41, '2023_06_05_114735_create_basesalary_table', 2);
 
 -- --------------------------------------------------------
 
@@ -120,7 +143,24 @@ CREATE TABLE IF NOT EXISTS `punchrecord` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `punchrecord_nameid_foreign` (`nameid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `punchrecord`
+--
+
+INSERT INTO `punchrecord` (`id`, `date`, `nameid`, `punch_in`, `punch_out`, `time`, `mark`, `created_at`, `updated_at`) VALUES
+(1, '6/2', 2, '10:00', '12:00', '2時0分', 1, '2023-06-02 04:04:16', '2023-06-02 04:04:47'),
+(3, '6/2', 3, '14:00', '16:00', '2時0分', 0, '2023-06-02 06:05:48', '2023-06-02 08:23:38'),
+(4, '6/2', 5, '12:00', '13:00', '1時0分', 1, '2023-06-02 06:09:31', '2023-06-02 06:09:31'),
+(5, '6/2', 10, '12:00', '13:00', '1時0分', 1, '2023-06-02 06:09:57', '2023-06-02 06:09:57'),
+(6, '6/2', 9, '12:00', '13:00', '1時0分', 1, '2023-06-02 06:12:29', '2023-06-02 06:12:29'),
+(17, '6/2', 2, '16:00', '17:00', '1時0分', NULL, '2023-06-02 08:22:57', '2023-06-02 09:00:08'),
+(18, '6/2', 11, '16:40', '17:43', '1時3分', NULL, '2023-06-02 08:40:42', '2023-06-02 09:43:19'),
+(19, '6/2', 8, '16:44', '17:43', '0時59分', NULL, '2023-06-02 08:44:41', '2023-06-02 09:43:04'),
+(40, '6/5', 10, '12:00', NULL, NULL, NULL, '2023-06-05 04:12:34', '2023-06-05 04:12:34'),
+(39, '6/5', 9, '12:00', NULL, NULL, NULL, '2023-06-05 04:12:21', '2023-06-05 04:12:21'),
+(38, '6/5', 3, '10:00', '12:04', '2時4分', NULL, '2023-06-05 02:25:17', '2023-06-05 04:04:29');
 
 -- --------------------------------------------------------
 
@@ -151,15 +191,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `name`, `role`, `username`, `password`, `cardID`, `studentID`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, '管理員', NULL, 'admin', '$2y$10$h2JeGlrwz5ZJhckktMReb.1X8alWAW55.cGVHtFTgzdql17fm.RcW', NULL, NULL, NULL, '2023-06-02 02:24:12', '2023-06-02 02:24:12'),
 (2, '簡至昊', '1', NULL, NULL, '1214448021', 'D1094162012', NULL, '2023-06-02 02:57:21', '2023-06-02 03:14:10'),
-(3, '劉彥芝', NULL, NULL, NULL, NULL, 'D1094421701', NULL, '2023-06-02 02:58:27', '2023-06-02 02:58:27'),
+(3, '劉彥芝', NULL, NULL, NULL, '1216331429', 'D1094421701', NULL, '2023-06-02 02:58:27', '2023-06-02 04:18:46'),
 (4, '蔡定辰', NULL, NULL, NULL, NULL, 'D1094161033', NULL, '2023-06-02 02:58:47', '2023-06-02 02:58:47'),
 (5, '許肇恒', NULL, NULL, NULL, NULL, 'D1094161032', NULL, '2023-06-02 02:59:00', '2023-06-02 02:59:00'),
 (6, '王鈺欣', NULL, NULL, NULL, NULL, 'D1104442702', NULL, '2023-06-02 02:59:29', '2023-06-02 02:59:29'),
 (7, '謝承祐', NULL, NULL, NULL, NULL, 'D1104111708', NULL, '2023-06-02 02:59:39', '2023-06-02 02:59:39'),
-(8, '劉伃芹', NULL, NULL, NULL, NULL, 'D1104431013', NULL, '2023-06-02 02:59:49', '2023-06-02 02:59:49'),
-(9, '謝宜軒', NULL, NULL, NULL, NULL, 'D1104431034', NULL, '2023-06-02 03:00:08', '2023-06-02 03:00:08'),
-(10, '林宜蓁', NULL, NULL, NULL, NULL, 'D1104221043', NULL, '2023-06-02 03:00:18', '2023-06-02 03:00:18'),
-(11, '林育成', NULL, NULL, NULL, NULL, 'D1104111051', NULL, '2023-06-02 03:00:27', '2023-06-02 03:00:27'),
+(8, '劉伃芹', NULL, NULL, NULL, '108412693', 'D1104431013', NULL, '2023-06-02 02:59:49', '2023-06-02 08:44:21'),
+(9, '謝宜軒', NULL, NULL, NULL, '1147044437', 'D1104431034', NULL, '2023-06-02 03:00:08', '2023-06-02 08:44:32'),
+(10, '林宜蓁', NULL, NULL, NULL, '1214068293', 'D1104221043', NULL, '2023-06-02 03:00:18', '2023-06-05 04:12:28'),
+(11, '林育成', NULL, NULL, NULL, '1215639509', 'D1104111051', NULL, '2023-06-02 03:00:27', '2023-06-02 08:26:03'),
 (12, '沈倢宇', NULL, NULL, NULL, NULL, 'D1114431002', NULL, '2023-06-02 03:00:37', '2023-06-02 03:00:37');
 COMMIT;
 
