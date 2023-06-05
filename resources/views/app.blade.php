@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" href="{{asset('icon/weibao.png')}}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -231,6 +231,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{asset('icon/weibao.png')}}" width="25%"/> <!-- header img -->
+                </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
