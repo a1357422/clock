@@ -96,7 +96,7 @@ class PunchController extends Controller
     }
 
     public function create(){
-        $punches = Punch::latest()->get();
+        $punches = Punch::Where('date',date('n/j'))->latest()->get();
         $users = User::get();
         $tags = [];
         foreach ($users as $user){
