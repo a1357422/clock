@@ -36,7 +36,11 @@ class PunchController extends Controller
             foreach($hours as $hour){
                 $totalhours += intval($hour);
             }
-            $totalminute = $totalminute%=60;
+            if($totalminute >= 60){
+                $count = floor($totalminute/60);
+                $totalminute = $totalminute%=60;
+                $totalhours += $count;
+            }
             if($user->role == 1){
                 $totalhours += floor($totalminute/60)+3;
                 $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
@@ -79,7 +83,11 @@ class PunchController extends Controller
         foreach($hours as $hour){
             $totalhours += intval($hour);
         }
-        $totalminute = $totalminute%=60;
+        if($totalminute >= 60){
+            $count = floor($totalminute/60);
+            $totalminute = $totalminute%=60;
+            $totalhours += $count;
+        }
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
             $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
