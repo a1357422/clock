@@ -16,7 +16,10 @@
         {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date) !!}
         {!! Form::hidden('nameid', $nameid) !!}
         <input type="submit" value="查詢" class="btn btn-secondary" />
+        @guest
+        @else
         <font color=blue><a href="{{ route('punch.createuserdata',['id'=>$nameid]) }}" class="btn btn-secondary">新增紀錄</a></font>
+        @endguest
         @csrf
     </form>
 </div>

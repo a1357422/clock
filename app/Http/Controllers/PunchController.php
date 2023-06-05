@@ -150,7 +150,7 @@ class PunchController extends Controller
     }
 
     public function month(Request $request){
-        $punches = Punch::Punch($request->input('month'))->where('nameid',$request->input('nameid'))->get();
+        $punches = Punch::Punch($request->input('month'))->where('nameid',$request->input('nameid'))->latest()->get();
         $user = User::Where('id',$request->input('nameid'))->first();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
@@ -183,7 +183,7 @@ class PunchController extends Controller
         }
         $totalmoneys["$user->id"] = $money;
         $hourtags["$user->id"] = $totalhours;
-        return view("punch.show",['user'=>$user,'punches'=>$punches,'selectname'=>$request->input('name'),'date'=>$request->input('month'),'text'=>$text,'nameid'=>$request->input('nameid'),'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
+        return view("punch.show",['basesalary'=>$basesalary,'user'=>$user,'punches'=>$punches,'selectname'=>$request->input('name'),'date'=>$request->input('month'),'text'=>$text,'nameid'=>$request->input('nameid'),'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
     public function store(Request $request){
