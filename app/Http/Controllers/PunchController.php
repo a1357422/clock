@@ -213,12 +213,12 @@ class PunchController extends Controller
                 $totalhour -= 1;
                 $totalminute = 60+$totalminute;
             }
-            if($totalhour < 0){
-                $totalhour = 0;
-                $totalminute = 0;
-            }
-            if($totalminute < 0)
-                $totalminute = 0;
+            if($totalminute > 0 && $totalminute < 54)
+                    $totalminute = 0;
+                else{
+                    $totalminute = 0;
+                    $totalhour += 1;
+                }
             $punch = Punch::create([
                 'date' => $month.'/'.$day,
                 'nameid' => $request->input('name'),
@@ -262,12 +262,12 @@ class PunchController extends Controller
                         $totalhour -= 1;
                         $totalminute = 60+$totalminute;
                     }
-                    if($totalhour < 0){
-                        $totalhour = 0;
+                    if($totalminute > 0 && $totalminute < 54)
                         $totalminute = 0;
+                    else{
+                        $totalminute = 0;
+                        $totalhour += 1;
                     }
-                    if($totalminute < 0)
-                        $totalminute = 0;
                     $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                     $punch->save();
                 }
@@ -307,12 +307,12 @@ class PunchController extends Controller
                             $totalhour -= 1;
                             $totalminute = 60+$totalminute;
                         }
-                        if($totalhour < 0){
-                            $totalhour = 0;
+                        if($totalminute > 0 && $totalminute < 54)
                             $totalminute = 0;
+                        else{
+                            $totalminute = 0;
+                            $totalhour += 1;
                         }
-                        if($totalminute < 0)
-                            $totalminute = 0;
                         $punch->time = strval($totalhour)."時".strval($totalminute)."分";
                         $punch->save();
                     }
