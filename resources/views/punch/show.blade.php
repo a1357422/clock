@@ -24,11 +24,11 @@
     <table class="table">
         <tr class='column_center'>
             <th>{{$date}}月總時數</th>
-            <th>薪資試算(時薪176)</th>
+            <th>薪資試算(時薪{{$basesalary}})</th>
         </tr>
         <tr class='column_center'>
             <td align="center" valign="center"><strong>{{ $text }}</strong></td>
-            <td align="center" valign="center"><strong>{{$hourtags[$user->id]}}*176 = {{ $totalmoneys[$user->id] }}元</strong></td>
+            <td align="center" valign="center"><strong>{{$hourtags[$user->id]}}*{{$basesalary}} = {{ $totalmoneys[$user->id] }}元</strong></td>
     </tr>
     </table>
 </div>

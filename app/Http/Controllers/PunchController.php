@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Basesalary;
 use App\Models\Punch;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ class PunchController extends Controller
     public function index(){
         $date = strval(date('n'));
         $users = User::Where('name','<>',"管理員")->get();
+        $basesalary = Basesalary::first();
+        $basesalary = $basesalary->basesalary;
         $tags = [];
         $totalmoneys = [];
         $hourtags = [];
@@ -37,12 +40,12 @@ class PunchController extends Controller
             if($user->role == 1){
                 $totalhours += floor($totalminute/60)+3;
                 $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
-                $money = $totalhours*176;
+                $money = $totalhours*$basesalary;
             }
             else{
                 $totalhours += floor($totalminute/60);
                 $text = $totalhours . "時" . $totalminute . "分"; 
-                $money = $totalhours*176;
+                $money = $totalhours*$basesalary;
             }
             $tags["$user->id"] = $text;
             $totalmoneys["$user->id"] = $money;
@@ -51,13 +54,15 @@ class PunchController extends Controller
         foreach($totalmoneys as $totalmoney){
             $total += $totalmoney;
         }
-        return view('punch.index',['users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags,'total'=>$total]);
+        return view('punch.index',['basesalary'=>$basesalary,'users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags,'total'=>$total]);
     }
 
     public function show($id){
         $date = strval(date('n'));
         $punches = Punch::Where('nameid',$id)->where('date','like',"$date%")->latest()->get();
         $user = User::Where('id',$id)->first();
+        $basesalary = Basesalary::first();
+        $basesalary = $basesalary->basesalary;
         $hours = [];
         $minutes = [];
         $totalhours = 0;
@@ -78,16 +83,16 @@ class PunchController extends Controller
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
             $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
-            $money = $totalhours*176;
+            $money = $totalhours*$basesalary;
         }
         else{
             $totalhours += floor($totalminute/60);
             $text = $totalhours . "時" . $totalminute . "分"; 
-            $money = $totalhours*176;
+            $money = $totalhours*$basesalary;
         }
         $totalmoneys["$user->id"] = $money;
         $hourtags["$user->id"] = $totalhours;
-        return view('punch.show', ['user'=>$user,'punches'=>$punches,'date'=>$date,'nameid'=>$id,'text'=>$text,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
+        return view('punch.show', ['basesalary'=>$basesalary,'user'=>$user,'punches'=>$punches,'date'=>$date,'nameid'=>$id,'text'=>$text,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
     public function create(){
@@ -147,6 +152,8 @@ class PunchController extends Controller
     public function month(Request $request){
         $punches = Punch::Punch($request->input('month'))->where('nameid',$request->input('nameid'))->get();
         $user = User::Where('id',$request->input('nameid'))->first();
+        $basesalary = Basesalary::first();
+        $basesalary = $basesalary->basesalary;
         $hours = [];
         $minutes = [];
         $totalhours = 0;
@@ -167,12 +174,12 @@ class PunchController extends Controller
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
             $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
-            $money = $totalhours*176;
+            $money = $totalhours*$basesalary;
         }
         else{
             $totalhours += floor($totalminute/60);
             $text = $totalhours . "時" . $totalminute . "分"; 
-            $money = $totalhours*176;
+            $money = $totalhours*$basesalary;
         }
         $totalmoneys["$user->id"] = $money;
         $hourtags["$user->id"] = $totalhours;

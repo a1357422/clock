@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BasesalaryController;
 use App\Http\Controllers\PunchController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,8 @@ Route::post('punch/store2',[PunchController::class,'store2'])->name('punch.store
 Route::post('punch/month', [PunchController::class,'month'])->name('punch.month');
 Route::delete('punch/delete/{id}/{punchid}',[PunchController::class,'destroy'])->where("id","[0-9]+")->where("punchid","[0-9]+")->name('punch.destroy');
 
+Route::patch('basesalary/update/{id}',[BasesalaryController::class,'update'])->where("id","[0-9]+")->name('basesalary.update');
+Route::get('basesalary/{id}/edit',[BasesalaryController::class,'edit'])->where("id","[0-9]+")->name('basesalary.edit');
 
 Auth::routes();
 

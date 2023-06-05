@@ -18,14 +18,14 @@
         <tr class='column_center'>
             <th>工讀生姓名</th>
             <th>{{$date}}月總時數</th>
-            <th>薪資試算(時薪176)</th>
+            <th>薪資試算(時薪{{$basesalary}})</th>
             <th>詳細資料</th>
         </tr>
         @foreach($users as $user)
         <tr class='column_center'>
             <td align="center" valign="center">{{ $user->name }}</td>
             <td align="center" valign="center">{{ $tags[$user->id] }}</td>
-            <td align="center" valign="center">{{$hourtags[$user->id]}}*176 = {{ $totalmoneys[$user->id] }}元</td>
+            <td align="center" valign="center">{{$hourtags[$user->id]}}*{{$basesalary}} = {{ $totalmoneys[$user->id] }}元</td>
             <td>
             <font color=blue><a href="{{ route('punch.show',['id'=>$user->id]) }}" class="btn btn-primary">詳細資料</a></font>
             </td>
