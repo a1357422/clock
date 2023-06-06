@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3306
--- 產生時間： 2023-06-06 05:09:03
+-- 產生時間： 2023-06-06 11:26:42
 -- 伺服器版本： 8.0.31
 -- PHP 版本： 8.0.26
 
@@ -34,14 +34,15 @@ CREATE TABLE IF NOT EXISTS `basesalary` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `basesalary`
 --
 
 INSERT INTO `basesalary` (`id`, `basesalary`, `created_at`, `updated_at`) VALUES
-(1, 176, NULL, '2023-06-05 08:15:51');
+(1, 176, NULL, '2023-06-05 08:15:51'),
+(2, 176, '2023-06-06 08:16:23', '2023-06-06 08:16:23');
 
 -- --------------------------------------------------------
 
@@ -143,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `punchrecord` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `punchrecord_nameid_foreign` (`nameid`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `punchrecord`
@@ -168,7 +169,11 @@ INSERT INTO `punchrecord` (`id`, `date`, `nameid`, `punch_in`, `punch_out`, `tim
 (46, '6/5', 12, '16:45', '17:40', '0時55分', NULL, '2023-06-05 08:45:17', '2023-06-05 09:40:58'),
 (47, '6/6', 10, '11:59', '13:01', '1時0分', NULL, '2023-06-06 03:59:57', '2023-06-06 05:01:19'),
 (49, '6/6', 9, '12:19', '13:01', '0時42分', NULL, '2023-06-06 04:19:43', '2023-06-06 05:01:14'),
-(50, '6/6', 6, '12:05', '13:02', '1時0分', 1, '2023-06-06 04:22:24', '2023-06-06 05:07:40');
+(50, '6/6', 6, '12:05', '13:02', '1時0分', 1, '2023-06-06 04:22:24', '2023-06-06 05:07:40'),
+(51, '6/6', 12, '13:47', '14:56', '1時0分', NULL, '2023-06-06 05:47:12', '2023-06-06 06:56:59'),
+(52, '6/6', 11, '15:00', '17:40', '2時40分', 0, '2023-06-06 08:35:09', '2023-06-06 09:53:22'),
+(53, '6/6', 6, '16:40', '17:40', '1時0分', 0, '2023-06-06 09:53:51', '2023-06-06 09:53:51'),
+(54, '6/6', 2, '16:40', '17:40', '1時0分', 0, '2023-06-06 09:54:35', '2023-06-06 09:54:35');
 
 -- --------------------------------------------------------
 
