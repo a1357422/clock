@@ -518,7 +518,7 @@ class PunchController extends Controller
         return redirect()->back();
     }
 
-    public function destroy($punchid){
+    public function destroy($id,$punchid){
         $punch = Punch::findOrFail($punchid);
         $punch->delete();
 
