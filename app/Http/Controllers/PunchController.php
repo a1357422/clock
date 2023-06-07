@@ -253,6 +253,7 @@ class PunchController extends Controller
             $totalhour = $hour2-$hour1;
             $totalminute = $minute2-$minute1;
             $punch = Punch::create([
+                'year' => date('Y'),
                 'date' => $month.'/'.$day,
                 'nameid' => $request->input('name'),
                 'punch_in' => $request->input('punch_in'),
@@ -276,6 +277,7 @@ class PunchController extends Controller
                 }
                 if($punch_in == null || ($punch_in != null && $punch_out != null)){
                     $punch = Punch::create([
+                        'year' => date('Y'),
                         'date' => date('n/j'),
                         'nameid' => $user->id,
                         'punch_in' => date("H:i")
@@ -327,6 +329,7 @@ class PunchController extends Controller
                     }
                     if($punch_in == null || ($punch_in != null && $punch_out != null)){
                         $punch = Punch::create([
+                            'year' => date('Y'),
                             'date' => date('n/j'),
                             'nameid' => $user->id,
                             'punch_in' => date("H:i")
@@ -399,6 +402,7 @@ class PunchController extends Controller
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
             $punch = Punch::create([
+                'year' => date('Y'),
                 'date' => $month.'/'.$day,
                 'nameid' => $request->input('name'),
                 'punch_in' => $request->input('punch_in'),
@@ -422,6 +426,7 @@ class PunchController extends Controller
                 }
                 if($punch_in == null || ($punch_in != null && $punch_out != null)){
                     $punch = Punch::create([
+                        'year' => date('Y'),
                         'date' => date('n/j'),
                         'nameid' => $user->id,
                         'punch_in' => date("H:i")
@@ -473,6 +478,7 @@ class PunchController extends Controller
                     }
                     if($punch_in == null || ($punch_in != null && $punch_out != null)){
                         $punch = Punch::create([
+                            'year' => date('Y'),
                             'date' => date('n/j'),
                             'nameid' => $user->id,
                             'punch_in' => date("H:i")

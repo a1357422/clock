@@ -12,6 +12,7 @@ class Punch extends Model
     protected $table = 'punchrecord';
     use HasFactory;
     protected $fillable=[
+        "year",
         "date",
         "nameid",
         "punch_in",
