@@ -262,7 +262,7 @@ class PunchController extends Controller
             ]);   
         }
         else{
-            $cradID = $request->input('cardID');
+            $cradID = ucfirst($request->input('cardID'));
             $user = User::where('cardID',$cradID)->first();
             if($user != null){
                 $check = Punch::Where('nameid',$user->id)->latest()->first();
@@ -408,7 +408,7 @@ class PunchController extends Controller
             ]);   
         }
         else{
-            $cradID = $request->input('cardID');
+            $cradID = ucfirst($request->input('cardID'));
             $user = User::where('cardID',$cradID)->first();
             if($user != null){
                 $check = Punch::Where('nameid',$user->id)->latest()->first();
