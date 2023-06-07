@@ -252,7 +252,8 @@ class PunchController extends Controller
             $minute2 = intval(substr($request->input('punch_out'),3,5));
             $totalhour = $hour2-$hour1;
             $totalminute = $minute2-$minute1;
-            $punch = Punch::create([
+	    $punch = Punch::create([
+		'year' => date('Y'),
                 'date' => $month.'/'.$day,
                 'nameid' => $request->input('name'),
                 'punch_in' => $request->input('punch_in'),
@@ -262,7 +263,7 @@ class PunchController extends Controller
             ]);   
         }
         else{
-            $cradID = $request->input('cardID');
+            $cradID = ucfirst($request->input('cardID'));
             $user = User::where('cardID',$cradID)->first();
             if($user != null){
                 $check = Punch::Where('nameid',$user->id)->latest()->first();
@@ -275,7 +276,8 @@ class PunchController extends Controller
                     $punch_out = $check->punch_out;
                 }
                 if($punch_in == null || ($punch_in != null && $punch_out != null)){
-                    $punch = Punch::create([
+		    $punch = Punch::create([
+			'year' => date('Y'),
                         'date' => date('n/j'),
                         'nameid' => $user->id,
                         'punch_in' => date("H:i")
@@ -326,7 +328,8 @@ class PunchController extends Controller
                         $punch_out = $check->punch_out;
                     }
                     if($punch_in == null || ($punch_in != null && $punch_out != null)){
-                        $punch = Punch::create([
+			$punch = Punch::create([
+			    'year' => date('Y'),
                             'date' => date('n/j'),
                             'nameid' => $user->id,
                             'punch_in' => date("H:i")
@@ -398,7 +401,8 @@ class PunchController extends Controller
             }
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
-            $punch = Punch::create([
+	    $punch = Punch::create([
+		'year' => date('Y'),
                 'date' => $month.'/'.$day,
                 'nameid' => $request->input('name'),
                 'punch_in' => $request->input('punch_in'),
@@ -408,7 +412,7 @@ class PunchController extends Controller
             ]);   
         }
         else{
-            $cradID = $request->input('cardID');
+            $cradID = ucfirst($request->input('cardID'));
             $user = User::where('cardID',$cradID)->first();
             if($user != null){
                 $check = Punch::Where('nameid',$user->id)->latest()->first();
@@ -421,7 +425,8 @@ class PunchController extends Controller
                     $punch_out = $check->punch_out;
                 }
                 if($punch_in == null || ($punch_in != null && $punch_out != null)){
-                    $punch = Punch::create([
+		    $punch = Punch::create([
+			'year' => date('Y'),
                         'date' => date('n/j'),
                         'nameid' => $user->id,
                         'punch_in' => date("H:i")
@@ -472,7 +477,8 @@ class PunchController extends Controller
                         $punch_out = $check->punch_out;
                     }
                     if($punch_in == null || ($punch_in != null && $punch_out != null)){
-                        $punch = Punch::create([
+			$punch = Punch::create([
+			    'year' => date('Y'),
                             'date' => date('n/j'),
                             'nameid' => $user->id,
                             'punch_in' => date("H:i")
