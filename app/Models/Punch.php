@@ -26,6 +26,7 @@ class Punch extends Model
     public function scopePunch($query,$date)
     {
         $query->join('users','punchrecord.nameid','=','users.id')->select('punchrecord.*')
+        ->where('year','=',date('Y'))
         ->where('date','LIKE',"$date%")
         ->where('punch_in','!=',null)
         ->where('punch_out','!=',null);
