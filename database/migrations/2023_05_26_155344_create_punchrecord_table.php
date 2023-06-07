@@ -14,7 +14,8 @@ class CreatePunchrecordTable extends Migration
     public function up()
     {
         Schema::create('punchrecord', function (Blueprint $table) {
-            $table->id()->comment("編號");
+	    $table->id()->comment("編號");
+	    $table->string('year')->nullable(true)->comment("年");
             $table->string('date')->nullable(true)->comment("月份");
             $table->foreignId("nameid")->unsigned()->nullable(false)->comment("工讀生編號");
             $table->foreign('nameid')->references('id')->on('users')->onDelete('cascade');
