@@ -11,16 +11,19 @@ class DownloaddbController extends Controller
     public function download()
     {
         if (Auth::check()) {
-            $result = exec("python D:/至昊/system/db.py 2>error.txt");
-            if($result == "已執行.ps1檔案。"){
+            $result = exec("python D:/LHU/衛保組/system/db.py 2>error.txt");
+            if($result == "已執行.ps1檔案。")
                 return redirect('punch')->with('success', '已同步連線版資料');
-            }
+            else
+                return redirect('punch')->with('success', '同步失敗');
         }
         else{
-            $result = exec("python D:/至昊/system/db.py 2>error.txt");
-            if($result == "已執行.ps1檔案。"){
+            $result = exec("python D:/LHU/衛保組/system/db.py 2>error.txt");
+            if($result == "已執行.ps1檔案。")
                 return redirect('punch/create')->with('success', '已同步連線版資料');
-            }
+            else
+                return redirect('punch/create')->with('success', '同步失敗');
+
         }
         
     }
