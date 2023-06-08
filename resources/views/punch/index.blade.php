@@ -10,6 +10,11 @@
         <h3>打卡紀錄管理</h3>
     </div>
 </div>
+@if(Session::has('success'))
+        <div class="alert alert-success">
+            {{ Session::get('success') }}
+        </div>
+@endif
 <div class="form-container">
     <font color=blue><a href="{{ route('punch.create') }}" class="btn btn-secondary">新增打卡紀錄</a></font>
 </div>

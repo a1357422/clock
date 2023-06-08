@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DownloaddbController extends Controller
 {
     //
     public function download()
     {
-        $result = exec("python D:/至昊/system/db.py");
-        if($result == "已執行.ps1檔案。"){
-            return redirect('punch/create')->with('success', '已同步連線版資料');
+        if (Auth::check()) {
+            $result = exec("python D:/至昊/system/db.py 2>error.txt");
+            if($result == "已執行.ps1檔案。"){
+                return redirect('punch')->with('success', '已同步連線版資料');
+            }
+        }
+        else{
+            $result = exec("python D:/至昊/system/db.py 2>error.txt");
+            if($result == "已執行.ps1檔案。"){
+                return redirect('punch/create')->with('success', '已同步連線版資料');
+            }
         }
         
     }
