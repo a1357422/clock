@@ -31,6 +31,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick="confirmAction(); return false;" >同步連線版資料</a>
         </li>
+        @if (Route::has('login'))
+          <li class="nav-item">
+              <a class="nav-link" href="{{ route('login') }}">{{ __('登入') }}</a>
+          </li>
+        @endif
         @else
         <li class="nav-item">
           <a class="nav-link" href="/users">工讀生資料</a>
@@ -43,6 +48,15 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" onclick="confirmAction(); return false;" >同步連線版資料</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+              {{ __('登出') }}
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+          </form>
         </li>
         @endguest
   </div>
