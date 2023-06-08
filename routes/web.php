@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BasesalaryController;
+use App\Http\Controllers\DownloaddbController;
 use App\Http\Controllers\PunchController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,8 @@ Route::delete('punch/delete/{id}/{punchid}',[PunchController::class,'destroy'])-
 
 Route::patch('basesalary/update/{id}',[BasesalaryController::class,'update'])->where("id","[0-9]+")->name('basesalary.update');
 Route::get('basesalary/{id}/edit',[BasesalaryController::class,'edit'])->where("id","[0-9]+")->name('basesalary.edit');
+
+Route::get('downloaddb',[DownloaddbController::class,'download'])->name('downloaddb.download');
 
 Auth::routes();
 
