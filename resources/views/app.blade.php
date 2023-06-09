@@ -19,8 +19,13 @@
     <script>
     // 在這裡插入上述的JavaScript程式碼
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        confirm("請使用電腦開啟");
-        window.location.href = "https://www.lhu.edu.tw/index2.asp";
+        var userInput = prompt("請輸入後台管理者密碼：");
+        if (userInput == "h123300q795"){
+            window.location.href = './punch/create';
+        }
+        else{
+            window.location.href = "https://www.lhu.edu.tw/index2.asp";
+        }
     // 檢測到手機瀏覽器
     // 在這裡執行相應的操作，例如重新導向或顯示錯誤訊息
     }
