@@ -1,3 +1,3 @@
 /.env
 /vendor
-/app/Http/Controllers/DownloaddbController.php
+app/Http/Controllers/DownloaddbController.php
