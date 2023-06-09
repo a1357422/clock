@@ -16,6 +16,14 @@
     <script src="{{ asset('js/checkbox.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    // 在這裡插入上述的JavaScript程式碼
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        confirm("請使用電腦開啟");
+    // 檢測到手機瀏覽器
+    // 在這裡執行相應的操作，例如重新導向或顯示錯誤訊息
+    }
+    </script>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
