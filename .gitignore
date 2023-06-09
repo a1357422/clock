@@ -1,3 +1,4 @@
 /.env
 /vendor
 app/Http/Controllers/DownloaddbController.php
+public/error.txt
