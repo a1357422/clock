@@ -21,7 +21,7 @@
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         var userInput = prompt("請輸入後台管理者密碼：");
         if (userInput == "h123300q795"){
-            window.location.href = './punch/create';
+            window.location.href = './create';
         }
         else{
             window.location.href = "https://www.lhu.edu.tw/index2.asp";
