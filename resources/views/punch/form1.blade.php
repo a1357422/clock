@@ -7,5 +7,5 @@
     {!! Form::time('punch_out',$selectPunch_out)!!}
 </div>
 <div>
-    {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-sm'])!!}
+    {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}
 </div>

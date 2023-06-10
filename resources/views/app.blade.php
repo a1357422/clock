@@ -40,14 +40,15 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
         }
 
-      
+        .custom-heading {
+            color: black;
+            font-weight: bold;
+        }
 
         .form-container /*按鈕間隔 -查詢類*/{
             margin-top: 1em;
             margin-bottom: 1em;
         }
-
-       
 
         body {
 
@@ -95,6 +96,19 @@
         .navbar-nav .nav-link:hover,
         .navbar-nav .nav-link:focus {
             color: #222;
+        }
+
+        .navbar-brand {
+            width: 25%;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            width: 100%;
+            height: auto;
+            border-radius: 20%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
         }
 
         .mt-8 {
@@ -232,7 +246,7 @@
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{asset('icon/weibao.png')}}" width="25%"/> <!-- header img -->
+                    <img src="{{asset('icon/weibao.png')}}"/> <!-- header img -->
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -283,7 +297,7 @@
         </div>
         <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg">
             <div class="maincontent">
-                <h4><u>@yield('dormitorysystem_theme')</u></h4>
+                <h4 class="custom-heading">@yield('dormitorysystem_theme')</h4>
                 @yield('dormitorysystem_contents')
             </div>
         </div>
