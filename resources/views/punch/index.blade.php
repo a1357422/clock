@@ -7,7 +7,7 @@
 @section('dormitorysystem_contents')
 <div class="function">
     <div class="maintitle_btn">
-        <h3>打卡紀錄管理</h3>
+        <h3 class="custom-heading">打卡紀錄管理</h3>
     </div>
 </div>
 @if(Session::has('success'))
@@ -40,6 +40,7 @@
             <td/>
             <td align="center" valign="center"> <strong> 總薪資：</strong></td>
             <td align="center" valign="center"> <strong> {{$total}}元</strong></td>
+            <td/>
         </tr>
     </table>
 </div>
