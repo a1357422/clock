@@ -3,5 +3,5 @@
     {!! Form::number('basesalary',$selectBasesalary)!!}
 </div>
 <div>
-    {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-sm'])!!}
+    {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}
 </div>

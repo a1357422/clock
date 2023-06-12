@@ -1,7 +1,7 @@
 @guest
 <div>
     {!! Form::label('cardID','打卡：')!!}
-    {!! Form::text('cardID',null,array('autofocus','placeholder'=>"請刷卡或輸入學號"))!!}
+    {!! Form::text('cardID',null,array('autofocus','autocomplete'=>"off",'placeholder'=>"請刷卡或輸入學號"))!!}
 </div>
 @else
 <div>
@@ -22,5 +22,5 @@
 </div>
 @endguest
 <div>
-    {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-sm'])!!}
+    {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}
 </div>
