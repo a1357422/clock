@@ -1,1 +1,1 @@
-python: can't open file 'D:\\LHU\\½Ã«O²Õ\\system\\db.py': [Errno 2] No such file or directory
+mysql: [Warning] Using a password on the command line interface can be insecure.

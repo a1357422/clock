@@ -3,6 +3,7 @@
 use App\Http\Controllers\BasesalaryController;
 use App\Http\Controllers\DownloaddbController;
 use App\Http\Controllers\PunchController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,13 @@ Route::patch('basesalary/update/{id}',[BasesalaryController::class,'update'])->w
 Route::get('basesalary/{id}/edit',[BasesalaryController::class,'edit'])->where("id","[0-9]+")->name('basesalary.edit');
 
 Route::get('downloaddb',[DownloaddbController::class,'download'])->name('downloaddb.download');
+
+Route::get('shift',[ShiftController::class,'index'])->name('shift.index');
+Route::get('shift/{id}/edit',[ShiftController::class,'edit'])->where("id","[0-9]+")->name('shift.edit');
+Route::patch('shift/update/{id}',[ShiftController::class,'update'])->where("id","[0-9]+")->name('shift.update');
+Route::get('shift/create',[ShiftController::class,'create'])->name('shift.create');
+Route::post('shift/store',[ShiftController::class,'store'])->name('shift.store');
+
 
 Auth::routes();
 
