@@ -4,12 +4,12 @@
     {!! Form::text('name',$selectName)!!}
 </div>
 <div>
-    {!! Form::label('cardID','卡號')!!}
-    {!! Form::text('cardID',$selectCardID)!!}
-</div>
-<div>
     {!! Form::label('studentID','學號')!!}
     {!! Form::text('studentID',$selectStudentID)!!}
+</div>
+<div>
+    {!! Form::label('cardID','卡號')!!}
+    {!! Form::text('cardID',$selectCardID)!!}
 </div>
 @else ($edituser == 0 && $login == 0)
 <div>
@@ -17,12 +17,12 @@
     {!! Form::hidden('name',$selectName)!!}
 </div>
 <div>
-    {!! Form::label('cardID','卡號')!!}
-    {!! Form::text('cardID',$selectCardID,array('autofocus'))!!}
-</div>
-<div>
     學號：{{$selectStudentID}}
     {!! Form::hidden('studentID',$selectStudentID)!!}
+</div>
+<div>
+    {!! Form::label('cardID','卡號')!!}
+    {!! Form::text('cardID',$selectCardID,array('autofocus'))!!}
 </div>
 
 @endif
