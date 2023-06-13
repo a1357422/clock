@@ -1,6 +1,6 @@
 <script>
     // 在這裡插入上述的JavaScript程式碼
-    setInterval('window.location.reload();',1000);
+    setInterval('window.location.reload();',3600000);
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         var userInput = prompt("請輸入後台管理者密碼：");
         if (userInput == "h123300q795"){
