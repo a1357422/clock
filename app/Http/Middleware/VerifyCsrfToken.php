@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
-use Closure;
 
 class VerifyCsrfToken extends Middleware
 {
@@ -12,21 +11,7 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
-    /**
-    * Handle an incoming request.
-    *
-    * @param \Illuminate\Http\Request $request
-    * @param \Closure $next
-    * @return mixed
-    */
     protected $except = [
         //
     ];
-    public function handle($request, Closure $next)
-    {
-    // 使用CSRF
-    //return parent::handle($request, $next);
-    // 禁用CSRF
-        return $next($request);
-    }
 }
