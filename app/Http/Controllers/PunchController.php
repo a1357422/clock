@@ -12,7 +12,7 @@ class PunchController extends Controller
 {
     //
     public function index(){
-        $date = strval(date('n'));
+        $date = strval(date('n')-1);
         $users = User::Where('name','<>',"管理員")->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
