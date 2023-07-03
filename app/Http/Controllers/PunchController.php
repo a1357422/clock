@@ -74,8 +74,7 @@ class PunchController extends Controller
     }
 
     public function record(Request $request){
-        dd($request->input('month'));
-        $date = strval(date('n'));
+        $date = $request->input('month');
         $users = User::Where('name','<>',"管理員")->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
@@ -136,8 +135,8 @@ class PunchController extends Controller
         return view('punch.index',['basesalary'=>$basesalary,'users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags,'total'=>$total]);
     }
 
-    public function show($id){
-        $date = strval(date('n'));
+    public function show($id,$month){
+        $date = $month;
         $punches = Punch::Where('year',date('Y'))->Where('nameid',$id)->where('date','like',"$date%")->latest()->get();
         $user = User::Where('id',$id)->first();
         $basesalary = Basesalary::first();
