@@ -32,6 +32,7 @@ Route::delete('users/delete/{id}',[UsersController::class,'destroy'])->where("id
 
 
 Route::get('punch',[PunchController::class,'index'])->name('punch.index');
+Route::post('punch/record',[PunchController::class,'record'])->name('punch.record');
 Route::get('punch/{id}',[PunchController::class,'show'])->where("id","[0-9]+")->name('punch.show');
 Route::patch('punch/update/{id}',[PunchController::class,'update'])->where("id","[0-9]+")->name('punch.update');
 Route::get('punch/{id}/edit',[PunchController::class,'edit'])->where("id","[0-9]+")->name('punch.edit');

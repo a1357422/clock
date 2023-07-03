@@ -12,7 +12,70 @@ class PunchController extends Controller
 {
     //
     public function index(){
-        $date = strval(date('n')-1);
+        $date = strval(date('n'));
+        $users = User::Where('name','<>',"管理員")->get();
+        $basesalary = Basesalary::first();
+        $basesalary = $basesalary->basesalary;
+        $tags = [];
+        $totalmoneys = [];
+        $hourtags = [];
+        $total = 0;
+        foreach($users as $user){
+            $hours = [];
+            $minutes = [];
+            $totalhours = 0;
+            $totalminute = 0;
+            $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
+            foreach($punches as $punch){
+                array_push($hours,substr($punch->time,0,1));
+                array_push($minutes,mb_substr($punch->time,2,2));
+            }
+            foreach($minutes as $minute){
+                $totalminute += intval($minute);
+            }
+            foreach($hours as $hour){
+                $totalhours += intval($hour);
+            }
+            if($totalminute >= 60){
+                $count = floor($totalminute/60);
+                $totalminute = $totalminute%=60;
+                $totalhours += $count;
+            }
+            if($user->role == 1){
+                $totalhours += floor($totalminute/60)+3;
+                if($totalminute >= 50 && $totalminute <= 59){
+                    $totalminute = 0;
+                    $totalhours += 1;
+                }
+                if($totalminute >= 1 && $totalminute <= 10)
+                    $totalminute = 0;
+                $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+                $money = $totalhours*$basesalary;
+            }
+            else{
+                $totalhours += floor($totalminute/60);
+                if($totalminute >= 50 && $totalminute <= 59){
+                    $totalminute = 0;
+                    $totalhours += 1;
+                }
+                if($totalminute >= 1 && $totalminute <= 10)
+                    $totalminute = 0;
+                $text = $totalhours . "時" . $totalminute . "分"; 
+                $money = $totalhours*$basesalary;
+            }
+            $tags["$user->id"] = $text;
+            $totalmoneys["$user->id"] = $money;
+            $hourtags["$user->id"] = $totalhours;
+        }
+        foreach($totalmoneys as $totalmoney){
+            $total += $totalmoney;
+        }
+        return view('punch.index',['basesalary'=>$basesalary,'users'=>$users,'date'=>$date,'tags'=>$tags,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags,'total'=>$total]);
+    }
+
+    public function record(Request $request){
+        dd($request->input('month'));
+        $date = strval(date('n'));
         $users = User::Where('name','<>',"管理員")->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
