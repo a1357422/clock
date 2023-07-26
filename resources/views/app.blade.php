@@ -238,12 +238,42 @@
                 padding: .5em .75em;
             }
         }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            table {
+                border-collapse: collapse;
+            }
+
+            /* 設置列印時表格邊框顏色和寬度 */
+            table, th, td {
+                border: 1px solid #000;
+            }
+            @page {
+                size: A4 landscape; /* 或者使用 size: landscape; */
+            }
+        }
+            .print-button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+                border-radius: 4px;
+                }
+
+            /* 自定義按鈕樣式 - 鼠標懸停效果 */
+            .print-button:hover {
+                background-color: #45a049;
+            }
     </style>
 </head>
 
 <body class="antialiased">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light">
+        <nav class="navbar navbar-expand-md navbar-light no-print">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{asset('icon/weibao.png')}}"/> <!-- header img -->
@@ -292,12 +322,12 @@
 
     </div>
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-        <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg maintitle">
+        <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg maintitle no-print">
             @include('header')
         </div>
         <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg">
             <div class="maincontent">
-                <h4 class="custom-heading">@yield('dormitorysystem_theme')</h4>
+                <h4 class="custom-heading no-print">@yield('dormitorysystem_theme')</h4>
                 @yield('dormitorysystem_contents')
             </div>
         </div>
