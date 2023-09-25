@@ -74,6 +74,21 @@
                 </form>
             </td>
         </tr>
+        @else
+        <tr class='column_center'>
+            <td align="center" valign="center">{{ $punch->date }}</td>
+            <td align="center" valign="center">{{ $punch->user->name }}</td>
+            <td align="center" valign="center">{{ $punch->punch_in }}</td>
+            <td align="center" valign="center">{{ $punch->punch_out }}</td>
+            <td align="center" valign="center">{{ $punch->time }}</td>
+            <td>
+                <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
+                <button type="submit" class="btn btn-danger">刪除</button><!---->
+                @method('delete')
+                @csrf
+                </form>
+            </td>
+        </tr>
         @endif
         @endguest
         @endforeach
