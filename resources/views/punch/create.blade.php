@@ -36,6 +36,7 @@
             <th>時數</th>
             @guest
             @else
+            <th>編輯</th>
             <th>刪除</th>
             @endguest
         </tr>
@@ -67,6 +68,9 @@
             <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
             <td>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+            </td>
+            <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
                 <button type="submit" class="btn btn-danger">刪除</button><!---->
                 @method('delete')
@@ -81,6 +85,9 @@
             <td align="center" valign="center">{{ $punch->punch_in }}</td>
             <td align="center" valign="center">{{ $punch->punch_out }}</td>
             <td align="center" valign="center">{{ $punch->time }}</td>
+            <td>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+            </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
                 <button type="submit" class="btn btn-danger">刪除</button><!---->
