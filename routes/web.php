@@ -46,12 +46,6 @@ Route::delete('punch/delete/{id}/{punchid}',[PunchController::class,'destroy'])-
 Route::patch('basesalary/update/{id}',[BasesalaryController::class,'update'])->where("id","[0-9]+")->name('basesalary.update');
 Route::get('basesalary/{id}/edit',[BasesalaryController::class,'edit'])->where("id","[0-9]+")->name('basesalary.edit');
 
-Route::get('shift',[ShiftController::class,'index'])->name('shift.index');
-Route::get('shift/{id}/edit',[ShiftController::class,'edit'])->where("id","[0-9]+")->name('shift.edit');
-Route::patch('shift/update/{id}',[ShiftController::class,'update'])->where("id","[0-9]+")->name('shift.update');
-Route::get('shift/create',[ShiftController::class,'create'])->name('shift.create');
-Route::post('shift/store',[ShiftController::class,'store'])->name('shift.store');
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -191,7 +191,8 @@ class PunchController extends Controller
 
     public function create(){
         $punches = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->latest()->get();
-        $users = User::get();
+        $users = User::Where('role','<>','2')->get();
+        dd($users);
         $tags = [];
         foreach ($users as $user){
             if($user->name == "管理員")

@@ -31,6 +31,9 @@
             <th>詳細資料</th>
         </tr>
         @foreach($users as $user)
+        @if ($user->role == 2)
+            @continue
+        @endif
         <tr class='column_center print-section'>
             <td align="center" valign="center">{{ $user->name }}</td>
             <td align="center" valign="center">{{ $tags[$user->id] }}</td>

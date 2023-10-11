@@ -24,7 +24,7 @@
             <th>新增卡號</th>
         </tr>
         @foreach($users as $user)
-        @if($user->name == "管理員")
+        @if($user->name == "管理員" || $user->role == 2)
             @continue
         @endif
         <tr class='column_center'>
@@ -56,7 +56,7 @@
             <th>刪除</th>
         </tr>
         @foreach($users as $user)
-        @if($user->name == "管理員")
+        @if($user->name == "管理員" || $user->role == 2)
             @continue
         @endif
         <tr class='column_center'>
