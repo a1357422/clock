@@ -32,6 +32,7 @@ class UsersController extends Controller
         $StudentID = $request->input('studentID');
 
         $user = User::updateOrcreate(['name' => $name],[
+            'role' => 0,
             'name' => $name,
             'cardID' => $cardID,
             'studentID' => $StudentID,
