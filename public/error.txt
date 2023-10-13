@@ -1,8 +1,1 @@
-Traceback (most recent call last):
-  File "D:\LHU\衛保組\system\db.py", line 23, in <module>
-    latest_zip_file = get_oldest_sql_file(folder_path)
-  File "D:\LHU\衛保組\system\db.py", line 11, in get_oldest_sql_file
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-  File "C:\Users\ChihHao\AppData\Local\Programs\Python\Python310\lib\zipfile.py", line 1249, in __init__
-    self.fp = io.open(file, filemode)
-PermissionError: [Errno 13] Permission denied: 'F:\\我的雲端硬碟\\clockbackup'
+mysql: [Warning] Using a password on the command line interface can be insecure.
