@@ -57,7 +57,10 @@
           <a class="nav-link" href="/users">工讀生資料</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/punch">打卡紀錄</a>
+          <a class="nav-link" href="/punch/create">今日打卡紀錄</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/punch">工讀生打卡紀錄</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/basesalary/1/edit">修改基本薪資</a>

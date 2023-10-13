@@ -1,3 +1,16 @@
+<script>
+    // 在這裡插入上述的JavaScript程式碼
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || /Win/i.test(navigator.platform) || /Mac/i.test(navigator.platform)) {
+        var userInput = prompt("請輸入後台管理者密碼：");
+        if (userInput == "82093211"){
+        }
+        else{
+            window.history.back();
+        }
+    // 檢測到手機瀏覽器
+    // 在這裡執行相應的操作，例如重新導向或顯示錯誤訊息
+    }
+</script>
 @extends('layouts.app')
 
 @section('content')
