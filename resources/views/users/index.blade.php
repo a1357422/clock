@@ -7,7 +7,7 @@
 @section('dormitorysystem_contents')
 <div class="function">
     <div class="maintitle_btn">
-        <h3>後台權限管理</h3>
+        <h3 class="custom-heading">後台權限管理</h3>
     </div>
 </div>
 @guest
@@ -23,7 +23,7 @@
             <th>新增卡號</th>
         </tr>
         @foreach($users as $user)
-        @if($user->name == "管理員")
+        @if($user->name == "管理員" || $user->role == 2)
             @continue
         @endif
         <tr class='column_center'>
@@ -55,7 +55,7 @@
             <th>刪除</th>
         </tr>
         @foreach($users as $user)
-        @if($user->name == "管理員")
+        @if($user->name == "管理員" || $user->role == 2)
             @continue
         @endif
         <tr class='column_center'>

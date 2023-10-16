@@ -9,24 +9,19 @@
       var currentTime = new Date();  // 建立一個Date物件，表示現在的時間
       var currentMonth = currentTime.getUTCMonth();  // 建立一個Date物件，表示現在的時間
       var currentDay = currentTime.getDate();  // 建立一個Date物件，表示現在的時間
+      var currentDay1 = currentDay-1;  // 建立一個Date物件，表示現在的時間
       var currentHour = currentTime.getHours();  // 獲取當前小時（0-23）
       var currentMinute = currentTime.getMinutes();  // 獲取當前分鐘（0-59）
-      var currentDate = currentMonth+1 +"/"+currentDay;
-      if(currentHour >= 6 && currentHour <= 11){
-        var result = confirm("確定要同步線上資料庫嗎?\n這將加載"+currentDate+" 06:00的資料並覆蓋掉目前本機資料！");
-      }
-      else if(currentHour >= 12 && currentHour <= 18){
-        var result = confirm("確定要同步線上資料庫嗎?\n這將加載"+currentDate+" 12:00的資料並覆蓋掉目前本機資料！");
-      }
-      else{
-        var result = confirm("確定要同步線上資料庫嗎?\n這將加載"+currentDate+" 18:00的資料並覆蓋掉目前本機資料！");
-      }
-      
+      var currentDate = currentMonth+1 +"/"+currentDay1;
+      var result = confirm("確定要同步線上資料庫嗎?\n這將加載"+currentDate+" 18:00的資料並覆蓋掉目前本機資料！");
       
       // 如果用戶點擊了確定按鈕
       if (result) {
         // 在這裡執行您想要的動作
-        window.location.href = "/downloaddb";
+        var userInput = prompt("請輸入後台管理者密碼：");
+        if (userInput == "82093211"){
+          window.location.href = "/downloaddb";
+        }
       } else {
         // 用戶取消操作，不執行任何動作
       }
@@ -60,7 +55,10 @@
           <a class="nav-link" href="/users">工讀生資料</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/punch">打卡紀錄</a>
+          <a class="nav-link" href="/punch/create">今日打卡紀錄</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/punch">工讀生打卡紀錄</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/shift">班表</a>

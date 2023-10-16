@@ -2,3 +2,4 @@
 /vendor
 app/Http/Controllers/DownloaddbController.php
 public/error.txt
+public/error.txt

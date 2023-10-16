@@ -12,14 +12,14 @@ class DownloaddbController extends Controller
     {
         if (Auth::check()) {
             $result = exec("python D:/至昊/system/db.py 2>error.txt");
-            if($result == "已執行.ps1檔案。")
+            if($result == "succes")
                 return redirect('punch')->with('success', '已同步連線版資料');
             else
                 return redirect('punch')->with('success', '同步失敗');
         }
         else{
             $result = exec("python D:/至昊/system/db.py 2>error.txt");
-            if($result == "已執行.ps1檔案。")
+            if($result == "succes")
                 return redirect('punch/create')->with('success', '已同步連線版資料');
             else
                 return redirect('punch/create')->with('success', '同步失敗');
