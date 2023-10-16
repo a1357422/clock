@@ -7,7 +7,7 @@
 @section('dormitorysystem_contents')
 <div class="function no-print">
     <div class="maintitle_btn">
-        <h3 class="custom-heading">打卡紀錄管理</h3>
+        <h3 class="custom-heading">{{$date}}月打卡紀錄管理</h3>
     </div>
 </div>
 <div class="form-container no-print">
