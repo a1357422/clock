@@ -10,6 +10,20 @@
     // 檢測到手機瀏覽器
     // 在這裡執行相應的操作，例如重新導向或顯示錯誤訊息
     }
+    let canPressEnter = true;
+    
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" && event.key !== 'NumpadEnter') {
+            if (canPressEnter) {
+                canPressEnter = false;
+                setTimeout(function() {
+                    canPressEnter = true;
+                }, 3000);
+            } else {
+                event.preventDefault();
+            }
+        }
+    });
 </script>
 @extends('app')
 
