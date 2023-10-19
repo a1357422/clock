@@ -12,7 +12,7 @@ class PunchController extends Controller
 {
     //
     public function index(){
-        $date = strval(date('n'));
+        $date = strval(date('n')-1);
         $users = User::Where('name','<>',"管理員")->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
@@ -219,6 +219,7 @@ class PunchController extends Controller
 
     public function update($id,Request $request){
         $punch = Punch::findOrFail($id);
+        $month = substr($punch->date,0,2);
         $punch->punch_in = $request->input('punch_in');
         $punch->punch_out = $request->input('punch_out');
         $hour1 = intval(substr($punch->punch_in,0,2));
@@ -246,7 +247,7 @@ class PunchController extends Controller
         $punch->time = strval($totalhour)."時".strval($totalminute)."分";
         $punch->mark = 1;
         $punch->save();
-        return redirect()->action([PunchController::class, 'show'],['id'=>$punch->nameid]);
+        return redirect()->action([PunchController::class, 'show'],['id'=>$punch->nameid,'month'=>$month]);
     }
 
     public function month(Request $request){
