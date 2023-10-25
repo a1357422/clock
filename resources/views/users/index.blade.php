@@ -28,7 +28,11 @@
         @endif
         <tr class='column_center'>
             <td align="center" valign="center">{{ $user->name }}</td>
-            <td align="center" valign="center">{{ $user->cardID }}</td>
+            @if($user->cardID == null)
+                <td/>
+            @else
+                <td align="center" valign="center">**********</td>
+            @endif
             <td align="center" valign="center">{{ $user->studentID }}</td>
             @if($user->cardID == null)
             <td><font color=blue><a href="{{ route('users.edituser',['id'=>$user->id]) }}" class="btn btn-secondary">新增卡號</a></font></td>
