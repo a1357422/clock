@@ -25,6 +25,7 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'studentID' => 'required|string',
         ];
     }
 
@@ -32,6 +33,7 @@ class CreateUserRequest extends FormRequest
     {
         return [
             "name.required" => "姓名 為必填",
+            "studentID.required" => "學號 為必填"
         ];
     }
 }
