@@ -30,10 +30,18 @@ class PunchController extends Controller
             $minutes = [];
             $totalhours = 0;
             $totalminute = 0;
+            $notes = [];
+            $note_tag = " ";
             $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
             foreach($punches as $punch){
+                if ($punch->note != null){
+                    array_push($notes,$punch->note);
+                }
                 array_push($hours,substr($punch->time,0,1));
                 array_push($minutes,mb_substr($punch->time,2,2));
+            }
+            foreach ($notes as $note){
+                $note_tag = $note_tag . $note . "\r\n";
             }
             foreach($minutes as $minute){
                 $totalminute += intval($minute);
@@ -54,7 +62,7 @@ class PunchController extends Controller
                 }
                 if($totalminute >= 1 && $totalminute <= 10)
                     $totalminute = 0;
-                $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+                $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'.$note_tag; 
                 $money = $totalhours*$basesalary;
             }
             else{
@@ -65,7 +73,7 @@ class PunchController extends Controller
                 }
                 if($totalminute >= 1 && $totalminute <= 10)
                     $totalminute = 0;
-                $text = $totalhours . "時" . $totalminute . "分"; 
+                $text = $totalhours . "時" . $totalminute . "分" .$note_tag; 
                 $money = $totalhours*$basesalary;
             }
             $tags["$user->id"] = $text;
@@ -92,8 +100,13 @@ class PunchController extends Controller
             $minutes = [];
             $totalhours = 0;
             $totalminute = 0;
+            $notes = [];
+            $note_tag = " ";
             $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
             foreach($punches as $punch){
+                if ($punch->note != null){
+                    array_push($notes,$punch->note);
+                }
                 array_push($hours,substr($punch->time,0,1));
                 array_push($minutes,mb_substr($punch->time,2,2));
             }
@@ -102,6 +115,9 @@ class PunchController extends Controller
             }
             foreach($hours as $hour){
                 $totalhours += intval($hour);
+            }
+            foreach ($notes as $note){
+                $note_tag = $note_tag . $note . "\r\n";
             }
             if($totalminute >= 60){
                 $count = floor($totalminute/60);
@@ -116,7 +132,7 @@ class PunchController extends Controller
                 }
                 if($totalminute >= 1 && $totalminute <= 10)
                     $totalminute = 0;
-                $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+                $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'.$note_tag; 
                 $money = $totalhours*$basesalary;
             }
             else{
@@ -127,7 +143,7 @@ class PunchController extends Controller
                 }
                 if($totalminute >= 1 && $totalminute <= 10)
                     $totalminute = 0;
-                $text = $totalhours . "時" . $totalminute . "分"; 
+                $text = $totalhours . "時" . $totalminute . "分".$note_tag; 
                 $money = $totalhours*$basesalary;
             }
             $tags["$user->id"] = $text;
@@ -152,7 +168,12 @@ class PunchController extends Controller
         $totalminute = 0;
         $totalmoneys = [];
         $hourtags = [];
+        $notes = [];
+        $note_tag = " ";
         foreach($punches as $punch){
+            if ($punch->note != null){
+                array_push($notes,$punch->note);
+            }
             array_push($hours,substr($punch->time,0,1));
             array_push($minutes,mb_substr($punch->time,2,2));
         }
@@ -161,6 +182,9 @@ class PunchController extends Controller
         }
         foreach($hours as $hour){
             $totalhours += intval($hour);
+        }
+        foreach ($notes as $note){
+            $note_tag = $note_tag . $note . "\r\n";
         }
         if($totalminute >= 60){
             $count = floor($totalminute/60);
@@ -175,7 +199,7 @@ class PunchController extends Controller
             }
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
-            $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+            $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'.$note_tag; 
             $money = $totalhours*$basesalary;
         }
         else{
@@ -186,7 +210,7 @@ class PunchController extends Controller
             }
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
-            $text = $totalhours . "時" . $totalminute . "分"; 
+            $text = $totalhours . "時" . $totalminute . "分".$note_tag; 
             $money = $totalhours*$basesalary;
         }
         $totalmoneys["$user->id"] = $money;
@@ -218,8 +242,9 @@ class PunchController extends Controller
         $punch = Punch::where('id',$id)->first();
         $selectPunch_in = $punch->punch_in;
         $selectPunch_out = $punch->punch_out;
+        $selectPunch_note = $punch->note;
 
-        return view('punch.edit',['punch'=>$punch,'selectPunch_in'=>$selectPunch_in,'selectPunch_out'=>$selectPunch_out]);
+        return view('punch.edit',['punch'=>$punch,'selectPunch_in'=>$selectPunch_in,'selectPunch_out'=>$selectPunch_out,'selectPunch_note'=>$selectPunch_note]);
     }
 
     public function update($id,Request $request){
@@ -227,6 +252,7 @@ class PunchController extends Controller
         $month = substr($punch->date,0,2);
         $punch->punch_in = $request->input('punch_in');
         $punch->punch_out = $request->input('punch_out');
+        $punch->note = $request->input('note');
         $hour1 = intval(substr($punch->punch_in,0,2));
         $hour2 = intval(substr($punch->punch_out,0,2));
         $minute1 = intval(substr($punch->punch_in,3,5));
@@ -266,7 +292,12 @@ class PunchController extends Controller
         $totalminute = 0;
         $totalmoneys = [];
         $hourtags = [];
+        $notes = [];
+        $note_tag = " ";
         foreach($punches as $punch){
+            if ($punch->note != null){
+                array_push($notes,$punch->note);
+            }
             array_push($hours,substr($punch->time,0,1));
             array_push($minutes,mb_substr($punch->time,2,2));
         }
@@ -275,6 +306,9 @@ class PunchController extends Controller
         }
         foreach($hours as $hour){
             $totalhours += intval($hour);
+        }
+        foreach ($notes as $note){
+            $note_tag = $note_tag . $note . "\r\n";
         }
         $totalminute = $totalminute%=60;
         if($user->role == 1){
@@ -285,7 +319,7 @@ class PunchController extends Controller
             }
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
-            $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'; 
+            $text = $totalhours . "時" . $totalminute . "分".'(含社長三小時)'.$note_tag; 
             $money = $totalhours*$basesalary;
         }
         else{
@@ -296,7 +330,7 @@ class PunchController extends Controller
             }
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
-            $text = $totalhours . "時" . $totalminute . "分"; 
+            $text = $totalhours . "時" . $totalminute . "分".$note_tag; 
             $money = $totalhours*$basesalary;
         }
         $totalmoneys["$user->id"] = $money;
@@ -342,7 +376,8 @@ class PunchController extends Controller
                 'punch_in' => $request->input('punch_in'),
                 'punch_out' => $request->input('punch_out'),
                 'time' => strval($totalhour)."時".strval($totalminute)."分",
-                'mark' => 1
+                'mark' => 1,
+                'note' => $request->input('note'),
             ]);   
         }
         else{
@@ -484,6 +519,7 @@ class PunchController extends Controller
             }
             if($totalminute >= 1 && $totalminute <= 10)
                 $totalminute = 0;
+            $note = $request->input('note');
             $punch = Punch::create([
                 'year' => date('Y'),
                 'date' => $month.'/'.$day,
@@ -491,7 +527,8 @@ class PunchController extends Controller
                 'punch_in' => $request->input('punch_in'),
                 'punch_out' => $request->input('punch_out'),
                 'time' => strval($totalhour)."時".strval($totalminute)."分",
-                'mark' => 1
+                'mark' => 1,
+                'note' => $note
             ]);   
         }
         else{

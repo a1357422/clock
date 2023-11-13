@@ -43,6 +43,7 @@
             <th>上班簽到時間</th>
             <th>上班簽退時間</th>
             <th>時數</th>
+            <th>備註</th>
             @guest
             @else
             <th>編輯</th>

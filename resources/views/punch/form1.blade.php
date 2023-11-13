@@ -7,5 +7,9 @@
     {!! Form::time('punch_out',$selectPunch_out)!!}
 </div>
 <div>
+    {!! Form::label('note','備註：')!!}
+    {!! Form::text('note',$selectPunch_note)!!}
+</div>
+<div>
     {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}
 </div>
