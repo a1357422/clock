@@ -19,6 +19,7 @@ class Punch extends Model
         "punch_out",
         'time',
         'mark',
+        'note',
         "created_at",
         "updataed_at",
     ];

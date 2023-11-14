@@ -21,6 +21,7 @@
             <th>上班簽到時間</th>
             <th>上班簽退時間</th>
             <th>時數</th>
+            <th>備註</th>
             <th>刪除</th>
         </tr>
         @foreach($punches as $punch)
@@ -32,6 +33,7 @@
             <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
+            <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
         </tr>
         @else
         <tr class='column_center'>
@@ -40,6 +42,7 @@
             <td align="center" valign="center">{{ $punch->punch_in }}</td>
             <td align="center" valign="center">{{ $punch->punch_out }}</td>
             <td align="center" valign="center">{{ $punch->time }}</td>
+            <td align="center" valign="center">{{ $punch->note }}</td>
         </tr>
         @endif
         @else
@@ -50,6 +53,7 @@
             <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
+            <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
                 <button type="submit" class="btn btn-danger">刪除</button><!---->

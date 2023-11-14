@@ -20,6 +20,10 @@
     {!! Form::label('punch_out','下班簽到時間：')!!}
     {!! Form::time('punch_out',date('H:i'))!!}
 </div>
+<div>
+    {!! Form::label('note','備註：')!!}
+    {!! Form::text('note',null,array('placeholder'=>"給予時數原因，若無可免填"))!!}
+</div>
 @endguest
 <div>
     {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}
