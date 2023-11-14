@@ -97,12 +97,18 @@ class PunchController extends Controller
                         $note_tag = $note_tag;
                         break;
                     }
-                    if ($count == count($notes)){
+                    if ($count == count($notes)-1){
                         break;
                     }
                     else{
-                        $note_tag = $note_tag . "+";
-                        $count += 1;
+                        if ($count == count($notes)){
+                            $note_tag = $note_tag;
+                            break;
+                        }
+                        else{
+                            $note_tag = $note_tag . "+";
+                            $count += 1;
+                        }
                     }
                 }
                 $totalhours += floor($totalminute/60);
