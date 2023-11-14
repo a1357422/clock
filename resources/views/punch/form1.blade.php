@@ -8,7 +8,7 @@
 </div>
 <div>
     {!! Form::label('note','備註：')!!}
-    {!! Form::text('note',$selectPunch_note)!!}
+    {!! Form::text('note',$selectPunch_note,array('placeholder'=>"給予時數原因，若無可免填"))!!}
 </div>
 <div>
     {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}

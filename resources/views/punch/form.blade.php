@@ -22,7 +22,7 @@
 </div>
 <div>
     {!! Form::label('note','備註：')!!}
-    {!! Form::text('note')!!}
+    {!! Form::text('note',null,array('placeholder'=>"給予時數原因，若無可免填"))!!}
 </div>
 @endguest
 <div>

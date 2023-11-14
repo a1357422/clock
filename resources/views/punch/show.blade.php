@@ -58,12 +58,14 @@
             <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
+            <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
             @else
             <td align="center" valign="center">{{ $punch->date }}</td>
             <td align="center" valign="center">{{ $punch->user->name }}</td>
             <td align="center" valign="center">{{ $punch->punch_in }}</td>
             <td align="center" valign="center">{{ $punch->punch_out }}</td>
             <td align="center" valign="center">{{ $punch->time }}</td>
+            <td align="center" valign="center">{{ $punch->note }}</td>
             @endif
             @guest
             @else
