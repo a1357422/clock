@@ -18,7 +18,7 @@
         <input type="submit" value="查詢" class="btn btn-secondary" />
         @guest
         @else
-        <font color=blue><a href="{{ route('punch.createuserdata',['id'=>$nameid]) }}" class="btn btn-secondary">新增紀錄</a></font>
+        <font color=blue><a href="{{ route('punch.createuserdata1',['id'=>$nameid]) }}" class="btn btn-secondary">新增紀錄</a></font>
         @endguest
         @csrf
     </form>

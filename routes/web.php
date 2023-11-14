@@ -37,7 +37,8 @@ Route::get('punch/{id}/edit',[PunchController::class,'edit'])->where("id","[0-9]
 Route::get('punch/{id}/{month}',[PunchController::class,'show'])->where("id","[0-9]+")->name('punch.show');
 Route::patch('punch/update/{id}',[PunchController::class,'update'])->where("id","[0-9]+")->name('punch.update');
 Route::get('punch/create',[PunchController::class,'create'])->name('punch.create');
-Route::get('punch/createuserdata/{id}',[PunchController::class,'createuserdata'])->name('punch.createuserdata');
+Route::get('punch/createuserdata',[PunchController::class,'createuserdata'])->name('punch.createuserdata');
+Route::get('punch/createuserdata/{id}',[PunchController::class,'createuserdata1'])->where("id","[0-9]+")->name('punch.createuserdata1');
 Route::post('punch/store',[PunchController::class,'store'])->name('punch.store');
 Route::post('punch/store2',[PunchController::class,'store2'])->name('punch.store2');
 Route::post('punch/month', [PunchController::class,'month'])->name('punch.month');

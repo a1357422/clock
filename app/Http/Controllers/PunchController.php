@@ -380,7 +380,19 @@ class PunchController extends Controller
         return view('punch.create', ['punches'=>$punches,'tags'=>$tags]);
     }
 
-    public function createuserdata($id){
+    public function createuserdata(){
+        $punches = Punch::Where('year',date('Y'))->latest()->get();
+        $users = User::Where('role','<>','2')->get();
+        $tags = [];
+        foreach ($users as $user){
+            if($user->name == "管理員")
+                continue;
+            $tags["$user->id"] = $user->name;
+        }
+        return view('punch.create2', ['punches'=>$punches,'tags'=>$tags]);
+    }
+
+    public function createuserdata1($id){
         $punches = Punch::Where('year',date('Y'))->Where('nameid',$id)->latest()->get();
         $user = User::findOrFail($id);
         $tags = [];
