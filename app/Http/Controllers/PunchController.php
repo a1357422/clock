@@ -31,7 +31,6 @@ class PunchController extends Controller
             $totalhours = 0;
             $totalminute = 0;
             $notes = [];
-            $note_tag = "含";
             $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
             foreach($punches as $punch){
                 if ($punch->note != null){
@@ -39,14 +38,6 @@ class PunchController extends Controller
                 }
                 array_push($hours,substr($punch->time,0,1));
                 array_push($minutes,mb_substr($punch->time,2,2));
-            }
-            foreach ($notes as $note){
-                if (count($notes)>1){
-                    $note_tag = $note_tag . $note . "+";
-                }
-                else{
-                    $note_tag = $note_tag . $note;
-                }
             }
             foreach($minutes as $minute){
                 $totalminute += intval($minute);
@@ -61,6 +52,28 @@ class PunchController extends Controller
             }
             if($user->role == 1){
                 $totalhours += floor($totalminute/60)+3;
+                $note_tag = "";
+                $count = 0;
+                foreach ($notes as $note){
+                    $note_tag = $note_tag . $note;
+                    if (count($notes) == 1){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    if ($count == count($notes)-1){
+                        break;
+                    }
+                    else{
+                        if ($count == count($notes)){
+                            $note_tag = $note_tag;
+                            break;
+                        }
+                        else{
+                            $note_tag = $note_tag . "+";
+                            $count += 1;
+                        }
+                    }
+                }
                 if($totalminute >= 50 && $totalminute <= 59){
                     $totalminute = 0;
                     $totalhours += 1;
@@ -77,6 +90,28 @@ class PunchController extends Controller
             }
             else{
                 $totalhours += floor($totalminute/60);
+                $note_tag = "含";
+                $count = 0;
+                foreach ($notes as $note){
+                    $note_tag = $note_tag . $note;
+                    if (count($notes) == 1){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    if ($count == count($notes)-1){
+                        break;
+                    }
+                    else{
+                        if ($count == count($notes)){
+                            $note_tag = $note_tag;
+                            break;
+                        }
+                        else{
+                            $note_tag = $note_tag . "+";
+                            $count += 1;
+                        }
+                    }
+                }
                 if($totalminute >= 50 && $totalminute <= 59){
                     $totalminute = 0;
                     $totalhours += 1;
@@ -116,7 +151,6 @@ class PunchController extends Controller
             $totalhours = 0;
             $totalminute = 0;
             $notes = [];
-            $note_tag = "含";
             $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
             foreach($punches as $punch){
                 if ($punch->note != null){
@@ -131,14 +165,6 @@ class PunchController extends Controller
             foreach($hours as $hour){
                 $totalhours += intval($hour);
             }
-            foreach ($notes as $note){
-                if (count($notes)>1){
-                    $note_tag = $note_tag . $note . "+";
-                }
-                else{
-                    $note_tag = $note_tag . $note;
-                }
-            }
             if($totalminute >= 60){
                 $count = floor($totalminute/60);
                 $totalminute = $totalminute%=60;
@@ -146,6 +172,28 @@ class PunchController extends Controller
             }
             if($user->role == 1){
                 $totalhours += floor($totalminute/60)+3;
+                $note_tag = "";
+                $count = 0;
+                foreach ($notes as $note){
+                    $note_tag = $note_tag . $note;
+                    if (count($notes) == 1){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    if ($count == count($notes)-1){
+                        break;
+                    }
+                    else{
+                        if ($count == count($notes)){
+                            $note_tag = $note_tag;
+                            break;
+                        }
+                        else{
+                            $note_tag = $note_tag . "+";
+                            $count += 1;
+                        }
+                    }
+                }
                 if($totalminute >= 50 && $totalminute <= 59){
                     $totalminute = 0;
                     $totalhours += 1;
@@ -162,6 +210,28 @@ class PunchController extends Controller
             }
             else{
                 $totalhours += floor($totalminute/60);
+                $note_tag = "含";
+                $count = 0;
+                foreach ($notes as $note){
+                    $note_tag = $note_tag . $note;
+                    if (count($notes) == 1){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    if ($count == count($notes)-1){
+                        break;
+                    }
+                    else{
+                        if ($count == count($notes)){
+                            $note_tag = $note_tag;
+                            break;
+                        }
+                        else{
+                            $note_tag = $note_tag . "+";
+                            $count += 1;
+                        }
+                    }
+                }
                 if($totalminute >= 50 && $totalminute <= 59){
                     $totalminute = 0;
                     $totalhours += 1;
@@ -199,7 +269,6 @@ class PunchController extends Controller
         $totalmoneys = [];
         $hourtags = [];
         $notes = [];
-        $note_tag = "含";
         foreach($punches as $punch){
             if ($punch->note != null){
                 array_push($notes,$punch->note);
@@ -213,14 +282,6 @@ class PunchController extends Controller
         foreach($hours as $hour){
             $totalhours += intval($hour);
         }
-        foreach ($notes as $note){
-            if (count($notes)>1){
-                    $note_tag = $note_tag . $note . "+";
-                }
-                else{
-                    $note_tag = $note_tag . $note;
-                }
-        }
         if($totalminute >= 60){
             $count = floor($totalminute/60);
             $totalminute = $totalminute%=60;
@@ -228,6 +289,28 @@ class PunchController extends Controller
         }
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
+            $note_tag = "";
+            $count = 0;
+            foreach ($notes as $note){
+                $note_tag = $note_tag . $note;
+                if (count($notes) == 1){
+                    $note_tag = $note_tag;
+                    break;
+                }
+                if ($count == count($notes)-1){
+                    break;
+                }
+                else{
+                    if ($count == count($notes)){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    else{
+                        $note_tag = $note_tag . "+";
+                        $count += 1;
+                    }
+                }
+            }
             if($totalminute >= 50 && $totalminute <= 59){
                 $totalminute = 0;
                 $totalhours += 1;
@@ -244,6 +327,28 @@ class PunchController extends Controller
         }
         else{
             $totalhours += floor($totalminute/60);
+            $note_tag = "含";
+            $count = 0;
+            foreach ($notes as $note){
+                $note_tag = $note_tag . $note;
+                if (count($notes) == 1){
+                    $note_tag = $note_tag;
+                    break;
+                }
+                if ($count == count($notes)-1){
+                    break;
+                }
+                else{
+                    if ($count == count($notes)){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    else{
+                        $note_tag = $note_tag . "+";
+                        $count += 1;
+                    }
+                }
+            }
             if($totalminute >= 50 && $totalminute <= 59){
                 $totalminute = 0;
                 $totalhours += 1;
@@ -275,7 +380,19 @@ class PunchController extends Controller
         return view('punch.create', ['punches'=>$punches,'tags'=>$tags]);
     }
 
-    public function createuserdata($id){
+    public function createuserdata(){
+        $punches = Punch::Where('year',date('Y'))->latest()->get();
+        $users = User::Where('role','<>','2')->get();
+        $tags = [];
+        foreach ($users as $user){
+            if($user->name == "管理員")
+                continue;
+            $tags["$user->id"] = $user->name;
+        }
+        return view('punch.create2', ['punches'=>$punches,'tags'=>$tags]);
+    }
+
+    public function createuserdata1($id){
         $punches = Punch::Where('year',date('Y'))->Where('nameid',$id)->latest()->get();
         $user = User::findOrFail($id);
         $tags = [];
@@ -338,7 +455,6 @@ class PunchController extends Controller
         $totalmoneys = [];
         $hourtags = [];
         $notes = [];
-        $note_tag = "含";
         foreach($punches as $punch){
             if ($punch->note != null){
                 array_push($notes,$punch->note);
@@ -352,17 +468,31 @@ class PunchController extends Controller
         foreach($hours as $hour){
             $totalhours += intval($hour);
         }
-        foreach ($notes as $note){
-            if (count($notes)>1){
-                    $note_tag = $note_tag . $note . "+";
-                }
-                else{
-                    $note_tag = $note_tag . $note;
-                }
-        }
         $totalminute = $totalminute%=60;
         if($user->role == 1){
             $totalhours += floor($totalminute/60)+3;
+            $note_tag = "";
+            $count = 0;
+            foreach ($notes as $note){
+                $note_tag = $note_tag . $note;
+                if (count($notes) == 1){
+                    $note_tag = $note_tag;
+                    break;
+                }
+                if ($count == count($notes)-1){
+                    break;
+                }
+                else{
+                    if ($count == count($notes)){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    else{
+                        $note_tag = $note_tag . "+";
+                        $count += 1;
+                    }
+                }
+            }
             if($totalminute >= 50 && $totalminute <= 59){
                 $totalminute = 0;
                 $totalhours += 1;
@@ -379,6 +509,28 @@ class PunchController extends Controller
         }
         else{
             $totalhours += floor($totalminute/60);
+            $note_tag = "含";
+            $count = 0;
+            foreach ($notes as $note){
+                $note_tag = $note_tag . $note;
+                if (count($notes) == 1){
+                    $note_tag = $note_tag;
+                    break;
+                }
+                if ($count == count($notes)-1){
+                    break;
+                }
+                else{
+                    if ($count == count($notes)){
+                        $note_tag = $note_tag;
+                        break;
+                    }
+                    else{
+                        $note_tag = $note_tag . "+";
+                        $count += 1;
+                    }
+                }
+            }
             if($totalminute >= 50 && $totalminute <= 59){
                 $totalminute = 0;
                 $totalhours += 1;

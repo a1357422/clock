@@ -38,7 +38,8 @@ Route::get('punch/{id}/edit',[PunchController::class,'edit'])->where("id","[0-9]
 Route::get('punch/{id}/{month}',[PunchController::class,'show'])->where("id","[0-9]+")->name('punch.show');
 Route::patch('punch/update/{id}',[PunchController::class,'update'])->where("id","[0-9]+")->name('punch.update');
 Route::get('punch/create',[PunchController::class,'create'])->name('punch.create');
-Route::get('punch/createuserdata/{id}',[PunchController::class,'createuserdata'])->name('punch.createuserdata');
+Route::get('punch/createuserdata',[PunchController::class,'createuserdata'])->name('punch.createuserdata');
+Route::get('punch/createuserdata/{id}',[PunchController::class,'createuserdata1'])->where("id","[0-9]+")->name('punch.createuserdata1');
 Route::post('punch/store',[PunchController::class,'store'])->name('punch.store');
 Route::post('punch/store2',[PunchController::class,'store2'])->name('punch.store2');
 Route::post('punch/month', [PunchController::class,'month'])->name('punch.month');
@@ -48,13 +49,6 @@ Route::patch('basesalary/update/{id}',[BasesalaryController::class,'update'])->w
 Route::get('basesalary/{id}/edit',[BasesalaryController::class,'edit'])->where("id","[0-9]+")->name('basesalary.edit');
 
 Route::get('downloaddb',[DownloaddbController::class,'download'])->name('downloaddb.download');
-
-Route::get('shift',[ShiftController::class,'index'])->name('shift.index');
-Route::get('shift/{id}/edit',[ShiftController::class,'edit'])->where("id","[0-9]+")->name('shift.edit');
-Route::patch('shift/update/{id}',[ShiftController::class,'update'])->where("id","[0-9]+")->name('shift.update');
-Route::get('shift/create',[ShiftController::class,'create'])->name('shift.create');
-Route::post('shift/store',[ShiftController::class,'store'])->name('shift.store');
-
 
 Auth::routes();
 
