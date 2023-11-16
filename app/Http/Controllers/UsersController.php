@@ -13,7 +13,7 @@ class UsersController extends Controller
 {
     //
     public function index(){
-        $users = User::get();
+        $users = User::OrderBy('id','asc')->get();
         if(count(User::Where('role',1)->get())>0)
             $count = 1;
         else

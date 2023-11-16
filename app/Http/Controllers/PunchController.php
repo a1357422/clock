@@ -18,7 +18,7 @@ class PunchController extends Controller
         else{
             $date = strval(date('n'));
         }
-        $users = User::Where('name','<>',"管理員")->get();
+        $users = User::Where('name','<>',"管理員")->orderBy('id','asc')->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
         $tags = [];
