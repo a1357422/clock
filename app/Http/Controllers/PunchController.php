@@ -54,6 +54,7 @@ class PunchController extends Controller
                 $totalhours += floor($totalminute/60)+3;
                 $note_tag = "";
                 $count = 0;
+                $notes = array_unique($notes);
                 foreach ($notes as $note){
                     $note_tag = $note_tag . $note;
                     if (count($notes) == 1){
@@ -92,6 +93,7 @@ class PunchController extends Controller
                 $totalhours += floor($totalminute/60);
                 $note_tag = "含";
                 $count = 0;
+                $notes = array_unique($notes);
                 foreach ($notes as $note){
                     $note_tag = $note_tag . $note;
                     if (count($notes) == 1){
@@ -138,7 +140,7 @@ class PunchController extends Controller
 
     public function record(Request $request){
         $date = $request->input('month');
-        $users = User::Where('name','<>',"管理員")->get();
+        $users = User::Where('name','<>',"管理員")->orderBy('id','asc')->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
         $tags = [];
@@ -174,6 +176,7 @@ class PunchController extends Controller
                 $totalhours += floor($totalminute/60)+3;
                 $note_tag = "";
                 $count = 0;
+                $notes = array_unique($notes);
                 foreach ($notes as $note){
                     $note_tag = $note_tag . $note;
                     if (count($notes) == 1){
@@ -212,6 +215,7 @@ class PunchController extends Controller
                 $totalhours += floor($totalminute/60);
                 $note_tag = "含";
                 $count = 0;
+                $notes = array_unique($notes);
                 foreach ($notes as $note){
                     $note_tag = $note_tag . $note;
                     if (count($notes) == 1){
@@ -291,6 +295,7 @@ class PunchController extends Controller
             $totalhours += floor($totalminute/60)+3;
             $note_tag = "";
             $count = 0;
+            $notes = array_unique($notes);
             foreach ($notes as $note){
                 $note_tag = $note_tag . $note;
                 if (count($notes) == 1){
@@ -329,6 +334,7 @@ class PunchController extends Controller
             $totalhours += floor($totalminute/60);
             $note_tag = "含";
             $count = 0;
+            $notes = array_unique($notes);
             foreach ($notes as $note){
                 $note_tag = $note_tag . $note;
                 if (count($notes) == 1){
@@ -370,7 +376,7 @@ class PunchController extends Controller
 
     public function create(){
         $punches = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->latest()->get();
-        $users = User::Where('role','<>','2')->get();
+        $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
         $tags = [];
         foreach ($users as $user){
             if($user->name == "管理員")
@@ -382,7 +388,7 @@ class PunchController extends Controller
 
     public function createuserdata(){
         $punches = Punch::Where('year',date('Y'))->latest()->get();
-        $users = User::Where('role','<>','2')->get();
+        $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
         $tags = [];
         foreach ($users as $user){
             if($user->name == "管理員")
@@ -473,6 +479,7 @@ class PunchController extends Controller
             $totalhours += floor($totalminute/60)+3;
             $note_tag = "";
             $count = 0;
+            $notes = array_unique($notes);
             foreach ($notes as $note){
                 $note_tag = $note_tag . $note;
                 if (count($notes) == 1){
@@ -511,6 +518,7 @@ class PunchController extends Controller
             $totalhours += floor($totalminute/60);
             $note_tag = "含";
             $count = 0;
+            $notes = array_unique($notes);
             foreach ($notes as $note){
                 $note_tag = $note_tag . $note;
                 if (count($notes) == 1){
