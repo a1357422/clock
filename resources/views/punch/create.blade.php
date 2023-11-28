@@ -86,7 +86,7 @@
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
             <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
             </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
@@ -105,7 +105,7 @@
             <td align="center" valign="center">{{ $punch->time }}</td>
             <td align="center" valign="center">{{ $punch->note }}</td>
             <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
             </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
