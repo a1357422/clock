@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Basesalary;
 use App\Models\Punch;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -374,6 +375,20 @@ class PunchController extends Controller
         return view('punch.show', ['basesalary'=>$basesalary,'user'=>$user,'punches'=>$punches,'date'=>$date,'nameid'=>$id,'text'=>$text,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
+    public function date($date){
+        $date = DateTime::createFromFormat('md', $date);
+        $date = $date->format('n/j');
+        $punches = Punch::Where('year',date('Y'))->Where('date',$date)->latest()->get();
+        $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
+        $tags = [];
+        foreach ($users as $user){
+            if($user->name == "管理員")
+                continue;
+            $tags["$user->id"] = $user->name;
+        }
+        return view('punch.create', ['punches'=>$punches,'tags'=>$tags,'state'=>1]);
+    }
+
     public function create(){
         $punches = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->latest()->get();
         $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
@@ -383,7 +398,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches'=>$punches,'tags'=>$tags]);
+        return view('punch.create', ['punches'=>$punches,'tags'=>$tags,'state'=>0]);
     }
 
     public function createuserdata(){

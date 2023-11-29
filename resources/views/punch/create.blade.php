@@ -38,9 +38,14 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    {!! Form::open(['url'=>'punch/store'])!!}
-    @include('punch.form',['submitButtonText'=>"打卡"])
-    {!! Form::close()!!}
+    @foreach ($punches as $punch)
+        @if ($state == 0 or ($punch->date == date('n/j')) or (Auth::user()->role == 2))
+            {!! Form::open(['url'=>'punch/store'])!!}
+            @include('punch.form',['submitButtonText'=>"打卡"])
+            {!! Form::close()!!}
+            @break
+        @endif
+    @endforeach
     <table class="table">
         <tr class='column_center'>
             <th>日期</th>
@@ -119,4 +124,26 @@
         @endguest
         @endforeach
     </table>
+    <div>
+        @if ($punches != "[]")
+            @foreach($punches as $punch)
+                @if($punch->date)
+                    @if(date('N', strtotime($punch->date))=="1")
+                    <font color=gray><a href="#"class="btn btn-warning" disabled>上一天</a></font>
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
+                    @break
+                    @else
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-primary">上一天</a></font>
+                    @if($punch->date == date('n/j'))
+                    @else
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
+                    @endif
+                    @break
+                    @endif
+                @endif
+            @endforeach
+        @else
+            <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('n/j', strtotime(date('n/j').' -1 day') ))]) }}" class="btn btn-primary">上一天</a></font>
+        @endif
+    </div>
 @endsection

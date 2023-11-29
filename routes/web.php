@@ -33,6 +33,7 @@ Route::delete('users/delete/{id}',[UsersController::class,'destroy'])->where("id
 
 Route::get('punch',[PunchController::class,'index'])->name('punch.index');
 Route::get('punch/record',[PunchController::class,'record'])->name('punch.record');
+Route::get('punch/date/{date}',[PunchController::class,'date'])->name('punch.date');
 Route::get('punch/{id}/edit/{state}',[PunchController::class,'edit'])->where("id","[0-9]+")->name('punch.edit');
 Route::get('punch/{id}/{month}',[PunchController::class,'show'])->where("id","[0-9]+")->name('punch.show');
 Route::patch('punch/update/{id}',[PunchController::class,'update'])->where("id","[0-9]+")->name('punch.update');
