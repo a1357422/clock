@@ -82,7 +82,11 @@
             <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
+            @if ($punch->note == null)
+            <td><font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>2]) }}" class="btn btn-secondary">新增備註</a></font></td>
+            @else
             <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
+            @endif
         </tr>
         @else
         <tr class='column_center'>
@@ -91,7 +95,11 @@
             <td align="center" valign="center">{{ $punch->punch_in }}</td>
             <td align="center" valign="center">{{ $punch->punch_out }}</td>
             <td align="center" valign="center">{{ $punch->time }}</td>
+            @if ($punch->note == null)
+            <td><font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>2]) }}" class="btn btn-secondary">新增備註</a></font></td>
+            @else
             <td align="center" valign="center">{{ $punch->note }}</td>
+            @endif
         </tr>
         @endif
         @else
