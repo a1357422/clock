@@ -39,9 +39,27 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    {!! Form::open(['url'=>'punch/store'])!!}
-    @include('punch.form',['submitButtonText'=>"打卡"])
-    {!! Form::close()!!}
+    @if ($punches != "[]")
+        @foreach ($punches as $punch)
+            @guest
+                @if ($state == 0 or ($punch->date == date('n/j')))
+                    {!! Form::open(['url'=>'punch/store'])!!}
+                    @include('punch.form',['submitButtonText'=>"打卡"])
+                    {!! Form::close()!!}
+                    @break
+                @endif
+            @else
+                {!! Form::open(['url'=>'punch/store'])!!}
+                @include('punch.form',['submitButtonText'=>"打卡"])
+                {!! Form::close()!!}
+                @break
+            @endguest
+        @endforeach
+    @else
+        {!! Form::open(['url'=>'punch/store'])!!}
+        @include('punch.form',['submitButtonText'=>"打卡"])
+        {!! Form::close()!!}
+    @endif
     <table class="table">
         <tr class='column_center'>
             <th>日期</th>
@@ -87,7 +105,7 @@
             <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
             <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
             <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
             </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
@@ -106,7 +124,7 @@
             <td align="center" valign="center">{{ $punch->time }}</td>
             <td align="center" valign="center">{{ $punch->note }}</td>
             <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
             </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
@@ -120,4 +138,26 @@
         @endguest
         @endforeach
     </table>
+    <div>
+        @if ($punches != "[]")
+            @foreach($punches as $punch)
+                @if($punch->date)
+                    @if(date('N', strtotime($punch->date))=="1")
+                    <font color=gray><a href="#"class="btn btn-warning" disabled>上一天</a></font>
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
+                    @break
+                    @else
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-primary">上一天</a></font>
+                    @if($punch->date == date('n/j'))
+                    @else
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
+                    @endif
+                    @break
+                    @endif
+                @endif
+            @endforeach
+        @else
+            <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('n/j', strtotime(date('n/j').' -1 day') ))]) }}" class="btn btn-primary">上一天</a></font>
+        @endif
+    </div>
 @endsection

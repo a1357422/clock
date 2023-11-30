@@ -70,7 +70,7 @@
             @guest
             @else
             <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id]) }}" class="btn btn-secondary">修改資料</a></font>
+                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>0]) }}" class="btn btn-secondary">修改資料</a></font>
             </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">

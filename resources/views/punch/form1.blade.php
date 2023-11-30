@@ -11,5 +11,6 @@
     {!! Form::text('note',$selectPunch_note,array('placeholder'=>"給予時數原因，若無可免填"))!!}
 </div>
 <div>
+    {!! Form::hidden('state', $state) !!}
     {!! Form::submit($submitButtonText,['class' => 'btn btn-primary btn-xl'])!!}
 </div>

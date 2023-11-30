@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Basesalary;
 use App\Models\Punch;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -374,6 +375,20 @@ class PunchController extends Controller
         return view('punch.show', ['basesalary'=>$basesalary,'user'=>$user,'punches'=>$punches,'date'=>$date,'nameid'=>$id,'text'=>$text,'totalmoneys'=>$totalmoneys,'hourtags'=>$hourtags]);
     }
 
+    public function date($date){
+        $date = DateTime::createFromFormat('md', $date);
+        $date = $date->format('n/j');
+        $punches = Punch::Where('year',date('Y'))->Where('date',$date)->latest()->get();
+        $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
+        $tags = [];
+        foreach ($users as $user){
+            if($user->name == "管理員")
+                continue;
+            $tags["$user->id"] = $user->name;
+        }
+        return view('punch.create', ['punches'=>$punches,'tags'=>$tags,'state'=>1]);
+    }
+
     public function create(){
         $punches = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->latest()->get();
         $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
@@ -383,7 +398,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches'=>$punches,'tags'=>$tags]);
+        return view('punch.create', ['punches'=>$punches,'tags'=>$tags,'state'=>0]);
     }
 
     public function createuserdata(){
@@ -406,13 +421,13 @@ class PunchController extends Controller
         return view('punch.create2', ['punches'=>$punches,'tags'=>$tags]);
     }
 
-    public function edit($id){
+    public function edit($id,$state){
         $punch = Punch::where('id',$id)->first();
         $selectPunch_in = $punch->punch_in;
         $selectPunch_out = $punch->punch_out;
         $selectPunch_note = $punch->note;
 
-        return view('punch.edit',['punch'=>$punch,'selectPunch_in'=>$selectPunch_in,'selectPunch_out'=>$selectPunch_out,'selectPunch_note'=>$selectPunch_note]);
+        return view('punch.edit',['punch'=>$punch,'state'=>$state,'selectPunch_in'=>$selectPunch_in,'selectPunch_out'=>$selectPunch_out,'selectPunch_note'=>$selectPunch_note]);
     }
 
     public function update($id,Request $request){
@@ -446,7 +461,12 @@ class PunchController extends Controller
         $punch->time = strval($totalhour)."時".strval($totalminute)."分";
         $punch->mark = 1;
         $punch->save();
-        return redirect()->action([PunchController::class, 'show'],['id'=>$punch->nameid,'month'=>$month]);
+        if ($request->state == "1"){
+            return redirect()->action([PunchController::class, 'create']);
+        }
+        else{
+            return redirect()->action([PunchController::class, 'show'],['id'=>$punch->nameid,'month'=>$month]);
+        }
     }
 
     public function month(Request $request){
