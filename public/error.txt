@@ -1,7 +1,7 @@
-D:\至昊\system\db.py:52: SyntaxWarning: invalid escape sequence '\c'
+D:\至昊\system\db.py:28: SyntaxWarning: invalid escape sequence '\c'
   folder_path = 'H:\我的雲端硬碟\clockbackup'
-D:\至昊\system\db.py:54: SyntaxWarning: invalid escape sequence '\s'
+D:\至昊\system\db.py:29: SyntaxWarning: invalid escape sequence '\s'
   output_folder = "D:\至昊\system\dbbackup"
-D:\至昊\system\db.py:70: SyntaxWarning: invalid escape sequence '\s'
+D:\至昊\system\db.py:50: SyntaxWarning: invalid escape sequence '\s'
   ps1_file_path = 'D:\至昊\system\db.ps1'
 mysql: [Warning] Using a password on the command line interface can be insecure.

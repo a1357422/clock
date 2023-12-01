@@ -459,9 +459,14 @@ class PunchController extends Controller
         if($totalminute >= 1 && $totalminute <= 10)
             $totalminute = 0;
         $punch->time = strval($totalhour)."時".strval($totalminute)."分";
-        $punch->mark = 1;
+        if($request->state == "2"){
+            $punch->mark = 0;
+        }
+        else{
+            $punch->mark = 1;
+        }
         $punch->save();
-        if ($request->state == "1"){
+        if ($request->state == "1" || $request->state == "2"){
             return redirect()->action([PunchController::class, 'create']);
         }
         else{
