@@ -150,7 +150,7 @@
         @if ($punches != "[]")
             @foreach($punches as $punch)
                 @if($punch->date)
-                    @if(date('N', strtotime($punch->date))=="1")
+                    @if(date('N')=="1"&&date('N', strtotime($punch->date))=="1")
                     <font color=gray><a href="#"class="btn btn-warning" disabled>上一天</a></font>
                     @break
                     @endif

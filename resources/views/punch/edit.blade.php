@@ -4,7 +4,9 @@
         if (note.trim() === '' || note === null) {
                 
         }
-        return confirm('是否要新增此備註？');
+        else{
+            return confirm('是否要新增此備註？');
+        }
     }
 </script>
 @extends('app')
