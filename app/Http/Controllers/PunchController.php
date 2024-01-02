@@ -278,8 +278,14 @@ class PunchController extends Controller
     }
     
     public function show($id,$month){
+        if(intval(date('n'))<intval($month)){
+            $year = date('Y')-1;
+        }
+        else{
+            $year = date('Y');
+        }
         $date = $month;
-        $punches = Punch::Where('year',date('Y'))->Where('nameid',$id)->where('date','like',"$date%")->latest()->get();
+        $punches = Punch::Where('year',$year)->Where('nameid',$id)->where('date','like',"$date%")->latest()->get();
         $user = User::Where('id',$id)->first();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
