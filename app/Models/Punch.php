@@ -24,10 +24,10 @@ class Punch extends Model
         "updataed_at",
     ];
 
-    public function scopePunch($query,$date)
+    public function scopePunch($query,$date,$year)
     {
         $query->join('users','punchrecord.nameid','=','users.id')->select('punchrecord.*')
-        ->where('year','=',date('Y'))
+        ->where('year','=',$year)
         ->where('date','LIKE',"$date%")
         ->where('punch_in','!=',null)
         ->where('punch_out','!=',null);

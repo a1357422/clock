@@ -15,9 +15,19 @@ class PunchController extends Controller
     public function index(){
         if (Auth::check()){
             $date = strval(date('n')-1);
+            if ($date == 0){
+                $date = "12";
+            }
         }
         else{
             $date = strval(date('n'));
+        }
+
+        if(intval(date('n'))<intval($date)){
+            $year = date('Y')-1;
+        }
+        else{
+            $year = date('Y');
         }
         $users = User::Where('name','<>',"管理員")->orderBy('id','asc')->get();
         $basesalary = Basesalary::first();
@@ -32,7 +42,7 @@ class PunchController extends Controller
             $totalhours = 0;
             $totalminute = 0;
             $notes = [];
-            $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
+            $punches = Punch::Punch($date,$year)->Where('nameid',$user->id)->get();
             foreach($punches as $punch){
                 if ($punch->note != null){
                     array_push($notes,$punch->note);
@@ -141,6 +151,12 @@ class PunchController extends Controller
 
     public function record(Request $request){
         $date = $request->input('month');
+        if(intval(date('n'))<intval($date)){
+            $year = date('Y')-1;
+        }
+        else{
+            $year = date('Y');
+        }
         $users = User::Where('name','<>',"管理員")->orderBy('id','asc')->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
@@ -154,7 +170,7 @@ class PunchController extends Controller
             $totalhours = 0;
             $totalminute = 0;
             $notes = [];
-            $punches = Punch::Punch($date)->Where('nameid',$user->id)->get();
+            $punches = Punch::Punch($date,$year)->Where('nameid',$user->id)->get();
             foreach($punches as $punch){
                 if ($punch->note != null){
                     array_push($notes,$punch->note);
@@ -475,7 +491,13 @@ class PunchController extends Controller
     }
 
     public function month(Request $request){
-        $punches = Punch::Punch($request->input('month'))->where('nameid',$request->input('nameid'))->latest()->get();
+        if(intval(date('n'))<intval($request->input('month'))){
+            $year = date('Y')-1;
+        }
+        else{
+            $year = date('Y');
+        }
+        $punches = Punch::Punch($request->input('month'),$year)->where('nameid',$request->input('nameid'))->latest()->get();
         $user = User::Where('id',$request->input('nameid'))->first();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
