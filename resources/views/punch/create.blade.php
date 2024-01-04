@@ -156,13 +156,13 @@
                     @endif
                     @if(date('N', strtotime($punch->date))=="1" && $punch->date != date('n/j'))
                     <font color=gray><a href="#"class="btn btn-warning" disabled>上一天</a></font>
-                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
                     @break
                     @else
-                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-primary">上一天</a></font>
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-primary">上一天</a></font>
                     @if($punch->date == date('n/j'))
                     @else
-                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('n/j',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
+                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-primary">下一天</a></font>
                     @endif
                     @break
                     @endif
@@ -172,7 +172,7 @@
             @if(date('N')=="1")
             <font color=gray><a href="#"class="btn btn-warning" disabled>上一天</a></font>
             @else
-            <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('n/j', strtotime(date('n/j').' -1 day') ))]) }}" class="btn btn-primary">上一天</a></font>
+            <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('md', strtotime(date('md').' -1 day') ))]) }}" class="btn btn-primary">上一天</a></font>
             @endif
         @endif
     </div>
