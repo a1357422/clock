@@ -657,7 +657,7 @@ class PunchController extends Controller
             $cradID = ucfirst($request->input('cardID'));
             $user = User::where('cardID',$cradID)->first();
             if($user != null){
-                $check = Punch::Where('year',date('Y'))->Where('nameid',$user->id)->latest()->first();
+                $check = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->Where('nameid',$user->id)->latest()->first();
                 if($check == null){
                     $punch_in = null;
                     $punch_out = null;
@@ -709,7 +709,7 @@ class PunchController extends Controller
                 if($user == null) 
                     return redirect('punch/create')->with('success', '查無卡號，請重試，或使用學號');
                 else{
-                    $check = Punch::Where('year',date('Y'))->Where('nameid',$user->id)->latest()->first();
+                    $check = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->Where('nameid',$user->id)->latest()->first();
                     if($check == null){
                         $punch_in = null;
                         $punch_out = null;
@@ -808,7 +808,7 @@ class PunchController extends Controller
             $cradID = ucfirst($request->input('cardID'));
             $user = User::where('cardID',$cradID)->first();
             if($user != null){
-                $check = Punch::Where('year',date('Y'))->Where('nameid',$user->id)->latest()->first();
+                $check = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->Where('nameid',$user->id)->latest()->first();
                 if($check == null){
                     $punch_in = null;
                     $punch_out = null;
@@ -860,7 +860,7 @@ class PunchController extends Controller
                 if($user == null) 
                     return redirect('punch/create')->with('success', '查無卡號，請重試，或使用學號');
                 else{
-                    $check = Punch::Where('year',date('Y'))->Where('nameid',$user->id)->latest()->first();
+                    $check = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->Where('nameid',$user->id)->latest()->first();
                     if($check == null){
                         $punch_in = null;
                         $punch_out = null;
