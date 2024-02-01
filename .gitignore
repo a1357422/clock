@@ -2,4 +2,6 @@
 /vendor
 app/Http/Controllers/DownloaddbController.php
 public/error.txt
-public/error.txt
+public/sslforfree/ca_bundle.crt
+public/sslforfree/certificate.crt
+public/sslforfree/private.key
