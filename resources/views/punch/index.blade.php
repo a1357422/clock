@@ -13,7 +13,7 @@
 <div class="form-container no-print">
     <form action="{{ url('punch/record') }}" method='GET'>
         {!! Form::label('month', '月份：') !!}
-        {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date) !!}
+        {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date, ['onchange' => 'submitForm()']) !!}
         <input type="submit" value="查詢" class="btn btn-secondary" />
         @guest
         <font color=blue><a href="{{ route('punch.create') }}" class="btn btn-secondary">新增打卡紀錄</a></font>
@@ -33,22 +33,22 @@
         </tr>
         @foreach($users as $user)
         @if ($user->role == 2)
-            @continue
+        @continue
         @endif
         <tr class='column_center print-section'>
             <td align="center" valign="center">{{ $user->name }}</td>
             <td align="center" valign="center">{{ $tags[$user->id] }}</td>
             <td align="center" valign="center">{{$hourtags[$user->id]}}*{{$basesalary}} = {{ $totalmoneys[$user->id] }}元</td>
             <td>
-            <font color=blue><a href="{{ route('punch.show',['id'=>$user->id,'month'=>$date]) }}" class="btn btn-primary no-print">詳細資料</a></font>
+                <font color=blue><a href="{{ route('punch.show',['id'=>$user->id,'month'=>$date]) }}" class="btn btn-primary no-print">詳細資料</a></font>
             </td>
         </tr>
         @endforeach
         <tr class='column_center no-print'>
-            <td/>
+            <td />
             <td align="center" valign="center"> <strong> 總薪資：</strong></td>
             <td align="center" valign="center"> <strong> {{$total}}元</strong></td>
-            <td/>
+            <td />
         </tr>
     </table>
 </div>

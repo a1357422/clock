@@ -13,7 +13,7 @@
 <div class="form-container">
     <form action="{{ url('punch/month') }}" method='POST'>
         {!! Form::label('month', '月份：') !!}
-        {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date) !!}
+        {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date, ['onchange' => 'submitForm()']) !!}
         {!! Form::hidden('nameid', $nameid) !!}
         <input type="submit" value="查詢" class="btn btn-secondary" />
         @guest
@@ -32,7 +32,7 @@
         <tr class='column_center'>
             <td align="center" valign="center"><strong>{{ $text }}</strong></td>
             <td align="center" valign="center"><strong>{{$hourtags[$user->id]}}*{{$basesalary}} = {{ $totalmoneys[$user->id] }}元</strong></td>
-    </tr>
+        </tr>
     </table>
 </div>
 <div class="table-responsive">
@@ -53,12 +53,24 @@
         @foreach($punches as $punch)
         <tr class='column_center'>
             @if($punch->mark === 1)
-            <td align="center" valign="center"><font color=red>{{ $punch->date }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->user->name }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
+            <td align="center" valign="center">
+                <font color=red>{{ $punch->date }}</font>
+            </td>
+            <td align="center" valign="center">
+                <font color=red>{{ $punch->user->name }}</font>
+            </td>
+            <td align="center" valign="center">
+                <font color=red>{{ $punch->punch_in }}</font>
+            </td>
+            <td align="center" valign="center">
+                <font color=red>{{ $punch->punch_out }}</font>
+            </td>
+            <td align="center" valign="center">
+                <font color=red>{{ $punch->time }}</font>
+            </td>
+            <td align="center" valign="center">
+                <font color=red>{{ $punch->note }}</font>
+            </td>
             @else
             <td align="center" valign="center">{{ $punch->date }}</td>
             <td align="center" valign="center">{{ $punch->user->name }}</td>
@@ -74,9 +86,9 @@
             </td>
             <td>
                 <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
-                <button type="submit" class="btn btn-danger">刪除</button><!---->
-                @method('delete')
-                @csrf
+                    <button type="submit" class="btn btn-danger">刪除</button><!---->
+                    @method('delete')
+                    @csrf
                 </form>
             </td>
             @endguest
