@@ -29,7 +29,7 @@ class UsersController extends Controller
     public function store(CreateUserRequest $request){
         $name = $request->input('name');
         $cardID = $request->input('cardID');
-        $StudentID = $request->input('studentID');
+        $StudentID = ucfirst($request->input('studentID'));
 
         $user = User::updateOrcreate(['name' => $name],[
             'role' => 0,
@@ -52,7 +52,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $selectName = $user->name;
         $selectCardID = $user->cardID;
-        $selectStudentID = $user->studentID;
+        $selectStudentID = ucfirst($user->studentID);
         return view('users.edit',['login'=>$login,'edituser'=>1,'user'=>$user,'selectName'=>$selectName,'selectCardID'=>$selectCardID,'selectStudentID'=>$selectStudentID]);
     }
 
@@ -60,7 +60,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->cardID = $request->input('cardID');
-        $user->studentID = $request->input('studentID');
+        $user->studentID = ucfirst($request->input('studentID'));
         $user->save();
         return redirect('users');
     }
