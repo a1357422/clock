@@ -13,13 +13,13 @@
 <div class="form-container no-print">
     <form action="{{ url('punch/record') }}" method='GET'>
         {!! Form::label('month', '月份：') !!}
-        {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date) !!}
-        <input type="submit" value="查詢" class="btn btn-secondary" />
+        {!! Form::select('month', array('1' => '1月' , '2' => '2月', '3' => '3月', '4' => '4月', '5' => '5月', '6' => '6月', '7' => '7月', '8' => '8月', '9' => '9月', '10' => '10月', '11' => '11月', '12' => '12月'),$date,['onchange' => 'submit()']) !!}
+        <input type="submit" value="查詢" class="btn btn-secondary" style="display: none;"/>
         @guest
         <font color=blue><a href="{{ route('punch.create') }}" class="btn btn-secondary">新增打卡紀錄</a></font>
         @else
         <font color=blue><a href="{{ route('punch.createuserdata')}}" class="btn btn-secondary">新增打卡紀錄</a></font>
-        <button class="print-button" onclick="printTable()">列印</button>
+        <button class="btn btn-success" onclick="printTable()">列印</button>
         @endguest
     </form>
 </div>
