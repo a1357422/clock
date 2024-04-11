@@ -12,7 +12,7 @@
 </div>
 @guest
 <div class="form-container">
-        <font color=blue><a href="{{ route('users.create') }}" class="btn btn-secondary">新建工讀生資料</a></font>
+    <font color=blue><a href="{{ route('users.create') }}" class="btn btn-secondary">新建工讀生資料</a></font>
 </div>
 <div class="table-responsive">
     <table class="table">
@@ -24,20 +24,22 @@
         </tr>
         @foreach($users as $user)
         @if($user->name == "管理員" || $user->role == 2)
-            @continue
+        @continue
         @endif
         <tr class='column_center'>
             <td align="center" valign="center">{{ $user->name }}</td>
             @if($user->cardID == null)
-                <td/>
+            <td />
             @else
-                <td align="center" valign="center">**********</td>
+            <td align="center" valign="center">**********</td>
             @endif
             <td align="center" valign="center">{{ $user->studentID }}</td>
             @if($user->cardID == null)
-            <td><font color=blue><a href="{{ route('users.edituser',['id'=>$user->id]) }}" class="btn btn-secondary">新增卡號</a></font></td>
+            <td>
+                <font color=blue><a href="{{ route('users.edituser',['id'=>$user->id]) }}" class="btn btn-secondary">新增卡號</a></font>
+            </td>
             @else
-            <td/>
+            <td />
             @endif
         </tr>
         @endforeach
@@ -45,7 +47,7 @@
 </div>
 @else
 <div class="form-container">
-        <font color=blue><a href="{{ route('users.create') }}" class="btn btn-secondary">新建工讀生資料</a></font>
+    <font color=blue><a href="{{ route('users.create') }}" class="btn btn-secondary">新建工讀生資料</a></font>
 </div>
 <div class="table-responsive">
     <table class="table">
@@ -60,7 +62,7 @@
         </tr>
         @foreach($users as $user)
         @if($user->name == "管理員" || $user->role == 2)
-            @continue
+        @continue
         @endif
         <tr class='column_center'>
             <td align="center" valign="center">{{ $user->id }}</td>
@@ -68,18 +70,24 @@
             <td align="center" valign="center">{{ $user->cardID }}</td>
             <td align="center" valign="center">{{ $user->studentID }}</td>
             @if($count == 1 && $user->role == 1)
-            <td><font color=blue><a href="{{ route('users.edit',['id'=>$user->id,'role'=>0]) }}" class="btn btn-secondary">工讀生</a></font></td>
+            <td>
+                <font color=blue><a href="{{ route('users.edit',['id'=>$user->id,'role'=>0]) }}" class="btn btn-secondary">工讀生</a></font>
+            </td>
             @elseif($user->role == null && $count == 1 || $user->role == 0 && $count == 1)
-            <td/>
+            <td />
             @elseif($count == 0)
-            <td><font color=blue><a href="{{ route('users.edit',['id'=>$user->id,'role'=>1]) }}" class="btn btn-secondary">社長</a></font></td>
+            <td>
+                <font color=blue><a href="{{ route('users.edit',['id'=>$user->id,'role'=>1]) }}" class="btn btn-secondary">社長</a></font>
+            </td>
             @endif
-            <td><font color=blue><a href="{{ route('users.edituser',['id'=>$user->id]) }}" class="btn btn-secondary">編輯</a></font></td>
+            <td>
+                <font color=blue><a href="{{ route('users.edituser',['id'=>$user->id]) }}" class="btn btn-secondary">編輯</a></font>
+            </td>
             <td>
                 <form action="{{ url('/users/delete', ['id' => $user->id]) }}" method="post">
-                <button type="submit" class="btn btn-danger">刪除</button><!---->
-                @method('delete')
-                @csrf
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('此操作將會移除此工讀生歷年所有打卡紀錄 是否進行刪除？')">刪除</button><!---->
+                    @method('delete')
+                    @csrf
                 </form>
             </td>
         </tr>

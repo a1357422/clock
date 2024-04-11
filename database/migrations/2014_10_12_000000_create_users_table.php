@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable(true);
             $table->string('cardID')->nullable(true)->comment("卡號");
             $table->string('studentID')->nullable(true)->comment("學號");
+            $table->boolean('hidden')->default(0)->nullable(true)->comment("隱藏");
             $table->rememberToken();
             $table->timestamps();
         });
