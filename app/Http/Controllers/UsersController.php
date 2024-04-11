@@ -59,6 +59,16 @@ class UsersController extends Controller
         return back();
     }
 
+    public function unhide()
+    {
+        $users = User::OrderBy('id', 'asc')->get();
+        foreach ($users as $user) {
+            $user->hidden = 0;
+            $user->save();
+        }
+        return back();
+    }
+
     public function edituser($id)
     {
         $login = Auth::check();

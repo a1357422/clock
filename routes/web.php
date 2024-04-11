@@ -27,6 +27,7 @@ Route::get('users/create', [UsersController::class, 'create'])->name('users.crea
 Route::post('users/store', [UsersController::class, 'store'])->name('users.store');
 Route::get('users/{id}/{role}/edit', [UsersController::class, 'edit'])->where("id", "[0-9]+")->name('users.edit');
 Route::get('users/{id}/hide', [UsersController::class, 'hide'])->where("id", "[0-9]+")->name('users.hide');
+Route::get('users/unhide', [UsersController::class, 'unhide'])->where("id", "[0-9]+")->name('users.unhide');
 Route::get('users/{id}/edit', [UsersController::class, 'edituser'])->where("id", "[0-9]+")->name('users.edituser');
 Route::patch('users/update/{id}', [UsersController::class, 'update'])->where("id", "[0-9]+")->name('users.update');
 Route::delete('users/delete/{id}', [UsersController::class, 'destroy'])->where("id", "[0-9]+")->name('users.destroy');
