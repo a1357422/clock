@@ -149,7 +149,7 @@ class PunchController extends Controller
         } else {
             $year = date('Y');
         }
-        $users = User::Where('name', '<>', "管理員")->orderBy('id', 'asc')->get();
+        $users = User::Where('name', '<>', "管理員")->where('hidden', '<>', 1)->orderBy('id', 'asc')->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
         $tags = [];

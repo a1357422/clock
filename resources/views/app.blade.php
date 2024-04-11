@@ -40,9 +40,12 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
         }
 
-      
 
-        .form-container /*按鈕間隔 -查詢類*/{
+
+        .form-container
+
+        /*按鈕間隔 -查詢類*/
+            {
             margin-top: 1em;
             margin-bottom: 1em;
         }
@@ -87,14 +90,16 @@
             border-radius: 20px 20px 20px 20px;
         }
 
-        .nav-item{
-            color:black;
-            font-weight:bold;
+        .nav-item {
+            color: black;
+            font-weight: bold;
         }
+
         .navbar-nav .nav-link {
             color: black;
             justify-content: flex-start;
         }
+
         .navbar-nav .nav-link:hover,
         .navbar-nav .nav-link:focus {
             color: #222;
@@ -133,6 +138,7 @@
             text-align: center;
 
         }
+
         .navbar-brand {
             width: 25%;
             display: flex;
@@ -239,36 +245,43 @@
                 padding: .5em .75em;
             }
         }
+
         @media print {
             .no-print {
                 display: none;
             }
+
             table {
                 border-collapse: collapse;
             }
 
             /* 設置列印時表格邊框顏色和寬度 */
-            table, th, td {
+            table,
+            th,
+            td {
                 border: 1px solid #000;
             }
+
             @page {
-                size: A4 landscape; /* 或者使用 size: landscape; */
+                size: A4 landscape;
+                /* 或者使用 size: landscape; */
             }
         }
-            .print-button {
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                font-size: 16px;
-                border: none;
-                cursor: pointer;
-                border-radius: 4px;
-                }
 
-            /* 自定義按鈕樣式 - 鼠標懸停效果 */
-            .print-button:hover {
-                background-color: #45a049;
-            }
+        .print-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* 自定義按鈕樣式 - 鼠標懸停效果 */
+        .print-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -277,7 +290,7 @@
         <nav class="navbar navbar-expand-md navbar-light no-print">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{asset('icon/weibao.png')}}"/> <!-- header img -->
+                    <img src="{{asset('icon/weibao.png')}}" /> <!-- header img -->
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -333,6 +346,6 @@
             </div>
         </div>
     </div>
-        </div class="flooter">
-        <h5>@include('footer')</h5>
+    </div class="flooter">
+    <h5>@include('footer')</h5>
 </body>
