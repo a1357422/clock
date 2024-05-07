@@ -385,7 +385,7 @@ class PunchController extends Controller
             foreach ($old_punches as $old_punch) {
                 if ($old_punch->punch_out == null) {
                     $user = User::Where('id', $old_punch->nameid)->first();
-                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime($date))) . "未打卡下班";
+                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime($date))) . "未打卡下班，請自行尋找大姐說明並處理";
                 }
             }
         } else {
@@ -409,9 +409,11 @@ class PunchController extends Controller
             foreach ($old_punches as $old_punch) {
                 if ($old_punch->punch_out == null) {
                     $user = User::Where('id', $old_punch->nameid)->first();
-                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime(date("n/j")))) . "未打卡下班";
+                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime(date("n/j")))) . "未打卡下班，請自行尋找大姐說明並處理";
                 }
             }
+        } else {
+            $warn = null;
         }
         $users = User::Where('role', '<>', '2')->orderBy('id', 'asc')->get();
         $tags = [];
