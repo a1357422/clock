@@ -2,16 +2,14 @@
     // 在這裡插入上述的JavaScript程式碼
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         var userInput = prompt("請輸入後台管理者密碼：");
-        if (userInput == "h123300q795"){
-        }
-        else{
+        if (userInput == "h123300q795") {} else {
             window.location.href = "https://www.lhu.edu.tw/index2.asp";
         }
-    // 檢測到手機瀏覽器
-    // 在這裡執行相應的操作，例如重新導向或顯示錯誤訊息
+        // 檢測到手機瀏覽器
+        // 在這裡執行相應的操作，例如重新導向或顯示錯誤訊息
     }
     let canPressEnter = true;
-    
+
     document.addEventListener("keydown", function(event) {
         if (event.key === "Enter" && event.key !== 'NumpadEnter') {
             if (canPressEnter) {
@@ -32,139 +30,172 @@
 @section('dormitorysystem_theme', '新增打卡資料系統')
 
 @section('dormitorysystem_contents')
-    @include('message.list')
-    @if(Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
-        </div>
-    @endif
-    @if ($punches != "[]")
-        @foreach ($punches as $punch)
-            @guest
-                @if ($state == 0 or ($punch->date == date('n/j')))
-                    {!! Form::open(['url'=>'punch/store'])!!}
-                    @include('punch.form',['submitButtonText'=>"打卡"])
-                    {!! Form::close()!!}
-                    @break
-                @endif
-            @else
-                {!! Form::open(['url'=>'punch/store'])!!}
-                @include('punch.form',['submitButtonText'=>"打卡"])
-                {!! Form::close()!!}
-                @break
-            @endguest
-        @endforeach
-    @else
-        {!! Form::open(['url'=>'punch/store'])!!}
-        @include('punch.form',['submitButtonText'=>"打卡"])
-        {!! Form::close()!!}
-    @endif
-    <table class="table">
-        <tr class='column_center'>
-            <th>日期</th>
-            <th>工讀生姓名</th>
-            <th>上班簽到時間</th>
-            <th>上班簽退時間</th>
-            <th>時數</th>
-            <th>備註</th>
-            @guest
-            @else
-            <th>編輯</th>
-            <th>刪除</th>
-            @endguest
-        </tr>
-        @foreach($punches as $punch)
+@include('message.list')
+@if(Session::has('success'))
+<div class="alert alert-success">
+    {{ Session::get('success') }}
+</div>
+@endif
+@if($warn)
+<div class="alert alert-danger">
+    {{ $warn }}
+</div>
+@endif
+@if ($punches != "[]")
+@foreach ($punches as $punch)
+@guest
+@if ($state == 0 or ($punch->date == date('n/j')))
+{!! Form::open(['url'=>'punch/store'])!!}
+@include('punch.form',['submitButtonText'=>"打卡"])
+{!! Form::close()!!}
+@break
+@endif
+@else
+{!! Form::open(['url'=>'punch/store'])!!}
+@include('punch.form',['submitButtonText'=>"打卡"])
+{!! Form::close()!!}
+@break
+@endguest
+@endforeach
+@else
+{!! Form::open(['url'=>'punch/store'])!!}
+@include('punch.form',['submitButtonText'=>"打卡"])
+{!! Form::close()!!}
+@endif
+<table class="table">
+    <tr class='column_center'>
+        <th>日期</th>
+        <th>工讀生姓名</th>
+        <th>上班簽到時間</th>
+        <th>上班簽退時間</th>
+        <th>時數</th>
+        <th>備註</th>
         @guest
-        @if($punch->mark == 1)
-        <tr class='column_center'>
-            <td align="center" valign="center"><font color=red>{{ $punch->date }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->user->name }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
-            @if ($punch->note == null)
-            <td><font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>2]) }}" class="btn btn-secondary">新增備註</a></font></td>
-            @else
-            <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
-            @endif
-        </tr>
         @else
-        <tr class='column_center'>
-            <td align="center" valign="center">{{ $punch->date }}</td>
-            <td align="center" valign="center">{{ $punch->user->name }}</td>
-            <td align="center" valign="center">{{ $punch->punch_in }}</td>
-            <td align="center" valign="center">{{ $punch->punch_out }}</td>
-            <td align="center" valign="center">{{ $punch->time }}</td>
-            @if ($punch->note == null)
-            <td><font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>2]) }}" class="btn btn-secondary">新增備註</a></font></td>
-            @else
-            <td align="center" valign="center">{{ $punch->note }}</td>
-            @endif
-        </tr>
-        @endif
-        @else
-        @if($punch->mark == 1)
-        <tr class='column_center'>
-            <td align="center" valign="center"><font color=red>{{ $punch->date }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->user->name }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->punch_in }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->punch_out }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->time }}</font></td>
-            <td align="center" valign="center"><font color=red>{{ $punch->note }}</font></td>
-            <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
-            </td>
-            <td>
-                <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
-                <button type="submit" class="btn btn-danger">刪除</button><!---->
-                @method('delete')
-                @csrf
-                </form>
-            </td>
-        </tr>
-        @else
-        <tr class='column_center'>
-            <td align="center" valign="center">{{ $punch->date }}</td>
-            <td align="center" valign="center">{{ $punch->user->name }}</td>
-            <td align="center" valign="center">{{ $punch->punch_in }}</td>
-            <td align="center" valign="center">{{ $punch->punch_out }}</td>
-            <td align="center" valign="center">{{ $punch->time }}</td>
-            <td align="center" valign="center">{{ $punch->note }}</td>
-            <td>
-                <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
-            </td>
-            <td>
-                <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
-                <button type="submit" class="btn btn-danger">刪除</button><!---->
-                @method('delete')
-                @csrf
-                </form>
-            </td>
-        </tr>
-        @endif
+        <th>編輯</th>
+        <th>刪除</th>
         @endguest
-        @endforeach
-    </table>
-    <div>
-        @if ($punches != "[]")
-            @foreach($punches as $punch)
-                @if($punch->date)
-                    @if(date('N', strtotime($punch->date))=="1")
-                    <font color=gray><a href="#"class="btn btn-secondary" disabled>上一天</a></font>
-                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
-                    @break
-                    @else
-                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-warning">上一天</a></font>
-                    @if($punch->date == date('n/j'))
-                    @else
-                    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
-                    @endif
-                    @break
-                    @endif
-                @endif
-            @endforeach
+    </tr>
+    @foreach($punches as $punch)
+    @guest
+    @if($punch->mark == 1)
+    <tr class='column_center'>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->date }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->user->name }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->punch_in }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->punch_out }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->time }}</font>
+        </td>
+        @if ($punch->note == null)
+        <td>
+            <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>2]) }}" class="btn btn-secondary">新增備註</a></font>
+        </td>
         @else
-            <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('md', strtotime(date('md').' -1 day') ))]) }}" class="btn btn-warning">上一天</a></font>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->note }}</font>
+        </td>
         @endif
-    </div>
+    </tr>
+    @else
+    <tr class='column_center'>
+        <td align="center" valign="center">{{ $punch->date }}</td>
+        <td align="center" valign="center">{{ $punch->user->name }}</td>
+        <td align="center" valign="center">{{ $punch->punch_in }}</td>
+        <td align="center" valign="center">{{ $punch->punch_out }}</td>
+        <td align="center" valign="center">{{ $punch->time }}</td>
+        @if ($punch->note == null)
+        <td>
+            <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>2]) }}" class="btn btn-secondary">新增備註</a></font>
+        </td>
+        @else
+        <td align="center" valign="center">{{ $punch->note }}</td>
+        @endif
+    </tr>
+    @endif
+    @else
+    @if($punch->mark == 1)
+    <tr class='column_center'>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->date }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->user->name }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->punch_in }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->punch_out }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->time }}</font>
+        </td>
+        <td align="center" valign="center">
+            <font color=red>{{ $punch->note }}</font>
+        </td>
+        <td>
+            <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
+        </td>
+        <td>
+            <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
+                <button type="submit" class="btn btn-danger">刪除</button><!---->
+                @method('delete')
+                @csrf
+            </form>
+        </td>
+    </tr>
+    @else
+    <tr class='column_center'>
+        <td align="center" valign="center">{{ $punch->date }}</td>
+        <td align="center" valign="center">{{ $punch->user->name }}</td>
+        <td align="center" valign="center">{{ $punch->punch_in }}</td>
+        <td align="center" valign="center">{{ $punch->punch_out }}</td>
+        <td align="center" valign="center">{{ $punch->time }}</td>
+        <td align="center" valign="center">{{ $punch->note }}</td>
+        <td>
+            <font color=blue><a href="{{ route('punch.edit',['id'=>$punch->id,'state'=>1]) }}" class="btn btn-secondary">修改資料</a></font>
+        </td>
+        <td>
+            <form action="{{ url('/punch/delete', ['id' => $punch->nameid,'punchid'=>$punch->id]) }}" method="POST">
+                <button type="submit" class="btn btn-danger">刪除</button><!---->
+                @method('delete')
+                @csrf
+            </form>
+        </td>
+    </tr>
+    @endif
+    @endguest
+    @endforeach
+</table>
+<div>
+    @if ($punches != "[]")
+    @foreach($punches as $punch)
+    @if($punch->date)
+    @if(date('N', strtotime($punch->date))=="1")
+    <font color=gray><a href="#" class="btn btn-secondary" disabled>上一天</a></font>
+    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
+    @break
+    @else
+    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-warning">上一天</a></font>
+    @if($punch->date == date('n/j'))
+    @else
+    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
+    @endif
+    @break
+    @endif
+    @endif
+    @endforeach
+    @else
+    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('md', strtotime(date('md').' -1 day') ))]) }}" class="btn btn-warning">上一天</a></font>
+    @endif
+</div>
 @endsection

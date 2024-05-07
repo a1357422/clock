@@ -380,6 +380,17 @@ class PunchController extends Controller
         $date = DateTime::createFromFormat('md', $date);
         $date = $date->format('n/j');
         $punches = Punch::Where('year', date('Y'))->Where('date', $date)->latest()->get();
+        $old_punches = Punch::Where('year', date('Y'))->Where('date', date('n/j', strtotime("-1 day", strtotime($date))))->latest()->get();
+        if (count($old_punches) != 0) {
+            foreach ($old_punches as $old_punch) {
+                if ($old_punch->punch_out == null) {
+                    $user = User::Where('id', $old_punch->nameid)->first();
+                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime($date))) . "未打卡下班";
+                }
+            }
+        } else {
+            $warn = null;
+        }
         $users = User::Where('role', '<>', '2')->orderBy('id', 'asc')->get();
         $tags = [];
         foreach ($users as $user) {
@@ -387,12 +398,21 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1, 'warn' => $warn]);
     }
 
     public function create()
     {
         $punches = Punch::Where('year', date('Y'))->Where('date', date('n/j'))->latest()->get();
+        $old_punches = Punch::Where('year', date('Y'))->Where('date', date('n/j', strtotime("-1 day", strtotime(date("n/j")))))->latest()->get();
+        if (count($old_punches) != 0) {
+            foreach ($old_punches as $old_punch) {
+                if ($old_punch->punch_out == null) {
+                    $user = User::Where('id', $old_punch->nameid)->first();
+                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime(date("n/j")))) . "未打卡下班";
+                }
+            }
+        }
         $users = User::Where('role', '<>', '2')->orderBy('id', 'asc')->get();
         $tags = [];
         foreach ($users as $user) {
@@ -400,7 +420,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0, 'warn' => $warn]);
     }
 
     public function createuserdata()
