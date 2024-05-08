@@ -377,19 +377,22 @@ class PunchController extends Controller
 
     public function date($date)
     {
+        $warns = [];
         $date = DateTime::createFromFormat('md', $date);
         $date = $date->format('n/j');
         $punches = Punch::Where('year', date('Y'))->Where('date', $date)->latest()->get();
-        $old_punches = Punch::Where('year', date('Y'))->Where('date', date('n/j', strtotime("-1 day", strtotime($date))))->latest()->get();
+        $old_punches = Punch::Where('year', date('Y'))->Where('date', '<>', $date)->latest()->get();
+        // $old_punches = Punch::Where('year', date('Y'))->Where('date', date('n/j', strtotime("-1 day", strtotime($date))))->latest()->get();
         if (count($old_punches) != 0) {
             foreach ($old_punches as $old_punch) {
                 if ($old_punch->punch_out == null) {
                     $user = User::Where('id', $old_punch->nameid)->first();
-                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime($date))) . "未打卡下班，請自行尋找大姐說明並處理";
+                    if (strtotime($old_punch->date) < strtotime($date))
+                        $warns["$user->id"] = $user->name . $old_punch->date . "未打卡下班，請自行尋找大姐說明並處理";
+                } else {
+                    $warns[0] = null;
                 }
             }
-        } else {
-            $warn = null;
         }
         $users = User::Where('role', '<>', '2')->orderBy('id', 'asc')->get();
         $tags = [];
@@ -398,22 +401,24 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1, 'warn' => $warn]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1, 'warns' => $warns]);
     }
 
     public function create()
     {
+        $warns = [];
         $punches = Punch::Where('year', date('Y'))->Where('date', date('n/j'))->latest()->get();
-        $old_punches = Punch::Where('year', date('Y'))->Where('date', date('n/j', strtotime("-1 day", strtotime(date("n/j")))))->latest()->get();
+        $old_punches = Punch::Where('year', date('Y'))->Where('date', '<>', date('n/j'))->latest()->get();
+        // $old_punches = Punch::Where('year', date('Y'))->Where('date', date('n/j', strtotime("-1 day", strtotime(date("n/j")))))->latest()->get();
         if (count($old_punches) != 0) {
             foreach ($old_punches as $old_punch) {
                 if ($old_punch->punch_out == null) {
                     $user = User::Where('id', $old_punch->nameid)->first();
-                    $warn = $user->name . date('n/j', strtotime("-1 day", strtotime(date("n/j")))) . "未打卡下班，請自行尋找大姐說明並處理";
+                    $warns["$user->id"] = $user->name . $old_punch->date . "未打卡下班，請自行尋找大姐說明並處理";
+                } else {
+                    $warns[0] = null;
                 }
             }
-        } else {
-            $warn = null;
         }
         $users = User::Where('role', '<>', '2')->orderBy('id', 'asc')->get();
         $tags = [];
@@ -422,7 +427,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0, 'warn' => $warn]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0, 'warns' => $warns]);
     }
 
     public function createuserdata()

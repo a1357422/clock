@@ -36,9 +36,14 @@
     {{ Session::get('success') }}
 </div>
 @endif
-@if($warn)
+@if(count($warns)!=1)
 <div class="alert alert-danger">
+    @foreach($warns as $warn)
+    @if ($warn != null)
     {{ $warn }}
+    <br />
+    @endif
+    @endforeach
 </div>
 @endif
 @if ($punches != "[]")
