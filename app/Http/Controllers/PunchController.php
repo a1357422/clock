@@ -12,24 +12,22 @@ use Illuminate\Support\Facades\Auth;
 class PunchController extends Controller
 {
     //
-    public function index(){
-        if (Auth::check()){
-            $date = strval(date('n')-1);
-            if ($date == 0){
+    public function index()
+    {
+        if (Auth::check()) {
+            $date = strval(date('n') - 1);
+            if ($date == 0) {
                 $date = "12";
             }
-        }
-        else{
+        }else{
             $date = strval(date('n'));
         }
-        
-        if(intval(date('n'))<intval($date)){
-            $year = date('Y')-1;
-        }
-        else{
+        if (intval(date('n')) < intval($date)) {
+            $year = date('Y') - 1;
+        } else {
             $year = date('Y');
         }
-        $users = User::Where('name','<>',"管理員")->orderBy('id','asc')->get();
+        $users = User::Where('name', '<>', "管理員")->where('hidden', '<>', 1)->orderBy('id', 'asc')->get();
         $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
         $tags = [];
@@ -42,10 +40,10 @@ class PunchController extends Controller
             $totalhours = 0;
             $totalminute = 0;
             $notes = [];
-            $punches = Punch::Punch($date,$year)->Where('nameid',$user->id)->get();
-            foreach($punches as $punch){
-                if ($punch->note != null){
-                    array_push($notes,$punch->note);
+            $punches = Punch::Punch($date, $year)->Where('nameid', $user->id)->get();
+            foreach ($punches as $punch) {
+                if ($punch->note != null) {
+                    array_push($notes, $punch->note);
                 }
                 array_push($hours,substr($punch->time,0,1));
                 array_push($minutes,mb_substr($punch->time,2,2));
@@ -157,8 +155,7 @@ class PunchController extends Controller
         else{
             $year = date('Y');
         }
-        $users = User::Where('name','<>',"管理員")->orderBy('id','asc')->get();
-        $basesalary = Basesalary::first();
+        $users = User::Where('name', '<>', "管理員")->where('hidden', '<>', 1)->orderBy('id', 'asc')->get();        $basesalary = Basesalary::first();
         $basesalary = $basesalary->basesalary;
         $tags = [];
         $totalmoneys = [];
@@ -398,9 +395,22 @@ class PunchController extends Controller
     }
 
     public function date($date){
+        $warns = [];
         $date = DateTime::createFromFormat('md', $date);
         $date = $date->format('n/j');
         $punches = Punch::Where('year',date('Y'))->Where('date',$date)->latest()->get();
+        $old_punches = Punch::Where('year', date('Y'))->Where('date', '<>', $date)->latest()->get();
+        if (count($old_punches) != 0) {
+            foreach ($old_punches as $old_punch) {
+                if ($old_punch->punch_out == null) {
+                    $user = User::Where('id', $old_punch->nameid)->first();
+                    if (strtotime($old_punch->date) < strtotime($date))
+                        $warns["$user->id"] = $user->name . $old_punch->date . "未打卡下班，請自行尋找大姐說明並處理";
+                } else {
+                    $warn = null;
+                }
+            }
+        }
         $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
         $tags = [];
         foreach ($users as $user){
@@ -408,11 +418,22 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches'=>$punches,'tags'=>$tags,'state'=>1]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1, 'warns' => $warns]);
     }
-
     public function create(){
+        $warns = [];
         $punches = Punch::Where('year',date('Y'))->Where('date',date('n/j'))->latest()->get();
+        $old_punches = Punch::Where('year', date('Y'))->Where('date', '<>', date('n/j'))->latest()->get();
+        if (count($old_punches) != 0) {
+            foreach ($old_punches as $old_punch) {
+                if ($old_punch->punch_out == null) {
+                    $user = User::Where('id', $old_punch->nameid)->first();
+                    $warns["$user->id"] = $user->name . $old_punch->date . "未打卡下班，請自行尋找大姐說明並處理";
+                } else {
+                    $warns[0] = null;
+                }
+            }
+        }
         $users = User::Where('role','<>','2')->orderBy('id','asc')->get();
         $tags = [];
         foreach ($users as $user){
@@ -420,7 +441,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches'=>$punches,'tags'=>$tags,'state'=>0]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0, 'warns' => $warns]);
     }
 
     public function createuserdata(){

@@ -77,7 +77,7 @@
             <td><font color=blue><a href="{{ route('users.edituser',['id'=>$user->id]) }}" class="btn btn-secondary">編輯</a></font></td>
             <td>
                 <form action="{{ url('/users/delete', ['id' => $user->id]) }}" method="post">
-                <button type="submit" class="btn btn-danger">刪除</button><!---->
+                <button type="submit" class="btn btn-danger" onclick="return confirm('此操作將會移除此工讀生歷年所有打卡紀錄 是否進行刪除？')">刪除</button><!---->
                 @method('delete')
                 @csrf
                 </form>
