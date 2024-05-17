@@ -23,9 +23,12 @@
                 @endguest
                 <button class="btn btn-success" onclick="printTable()">列印</button>
             </th>
+            @guest
+            @else
             <th>
                 <font color=blue><a href="{{ route('users.unhide') }}" class="btn btn-secondary">顯示已隱藏工讀生</a></font>
             </th>
+            @endguest
         </table>
     </form>
 </div>
@@ -36,7 +39,11 @@
             <th>{{$date}}月總時數</th>
             <th>薪資試算(時薪{{$basesalary}})</th>
             <th>詳細資料</th>
+            @guest
+            @else
             <th>隱藏</th>
+            @endguest
+
         </tr>
         @foreach($users as $user)
         @if ($user->role == 2)
@@ -49,9 +56,12 @@
             <td>
             <font color=blue><a href="{{ route('punch.show',['id'=>$user->id,'month'=>$date]) }}" class="btn btn-primary no-print">詳細資料</a></font>
             </td>
+            @guest
+            @else
             <td>
                 <font color=blue><a href="{{ route('users.hide',['id'=>$user->id]) }}" class="btn btn-secondary no-print" onclick="return confirm('您確定要隱藏此使用者嗎？')">隱藏</a></font>
             </td>
+            @endguest
         </tr>
         @endforeach
         <tr class='column_center no-print'>
