@@ -26,7 +26,7 @@ def extract_largest_file(zip_file, output_folder):
     return output_folder
 
 folder_path = 'F:\我的雲端硬碟\clockbackup'
-output_folder = "D:\LHU\衛保組\system\dbbackup"
+output_folder = "D:\wamp64\www\clock\DBDownload\dbbackup"
 
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
@@ -47,7 +47,7 @@ if latest_zip_file:
         if latest_extracted_file:
             print("解壓縮後的最新檔案：", latest_extracted_file)
 
-        ps1_file_path = 'D:\LHU\衛保組\system\db.ps1'
+        ps1_file_path = 'D:\wamp64\www\clock\DBDownload\db.ps1'
         if os.path.isfile(ps1_file_path):
             subprocess.call(["powershell", "-File", ps1_file_path, latest_extracted_file])
             print("succes")
