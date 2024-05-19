@@ -23,7 +23,8 @@ class User extends Authenticatable
         'username',
         'password',
         'cardID',
-        'studentID'
+        'studentID',
+        'hidden'
     ];
 
     /**
@@ -36,10 +37,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function punch(){
-        return $this->hasMany("App\Models\Punch","nameid");
+    public function punch()
+    {
+        return $this->hasMany("App\Models\Punch", "nameid");
     }
-    public function delete(){
+    public function delete()
+    {
         $this->punch()->delete();
         return parent::delete();
     }

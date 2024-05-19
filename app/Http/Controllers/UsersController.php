@@ -12,26 +12,29 @@ use Symfony\Component\Console\Input\Input;
 class UsersController extends Controller
 {
     //
-    public function index(){
-        $users = User::OrderBy('id','asc')->get();
-        if(count(User::Where('role',1)->get())>0)
+    public function index()
+    {
+        $users = User::OrderBy('id', 'asc')->get();
+        if (count(User::Where('role', 1)->get()) > 0)
             $count = 1;
         else
             $count = 0;
-        return view("users.index",['users'=>$users,'count'=>$count]);
+        return view("users.index", ['users' => $users, 'count' => $count]);
     }
 
-    public function create(){
+    public function create()
+    {
         $users = User::get();
-        return view('users.create', ['login'=>0,'edituser'=>0,'users'=>$users,'selectName'=>null,'selectCardID'=>null,'selectStudentID'=>null]);
+        return view('users.create', ['login' => 0, 'edituser' => 0, 'users' => $users, 'selectName' => null, 'selectCardID' => null, 'selectStudentID' => null]);
     }
 
-    public function store(CreateUserRequest $request){
+    public function store(CreateUserRequest $request)
+    {
         $name = $request->input('name');
         $cardID = $request->input('cardID');
-        $StudentID = $request->input('studentID');
+        $StudentID = ucfirst($request->input('studentID'));
 
-        $user = User::updateOrcreate(['name' => $name],[
+        $user = User::updateOrcreate(['name' => $name], [
             'role' => 0,
             'name' => $name,
             'cardID' => $cardID,
@@ -40,32 +43,54 @@ class UsersController extends Controller
         return redirect("/users");
     }
 
-    public function edit($id,$role){
+    public function edit($id, $role)
+    {
         $user = User::findOrFail($id);
         $user->role = $role;
         $user->save();
         return redirect('users');
     }
 
-    public function edituser($id){
+    public function hide($id)
+    {
+        $user = User::findOrFail($id);
+        $user->hidden = 1;
+        $user->save();
+        return back();
+    }
+
+    public function unhide()
+    {
+        $users = User::OrderBy('id', 'asc')->get();
+        foreach ($users as $user) {
+            $user->hidden = 0;
+            $user->save();
+        }
+        return back();
+    }
+
+    public function edituser($id)
+    {
         $login = Auth::check();
         $user = User::findOrFail($id);
         $selectName = $user->name;
         $selectCardID = $user->cardID;
-        $selectStudentID = $user->studentID;
-        return view('users.edit',['login'=>$login,'edituser'=>1,'user'=>$user,'selectName'=>$selectName,'selectCardID'=>$selectCardID,'selectStudentID'=>$selectStudentID]);
+        $selectStudentID = ucfirst($user->studentID);
+        return view('users.edit', ['login' => $login, 'edituser' => 1, 'user' => $user, 'selectName' => $selectName, 'selectCardID' => $selectCardID, 'selectStudentID' => $selectStudentID]);
     }
 
-    public function update($id,CreateUserRequest $request){
+    public function update($id, CreateUserRequest $request)
+    {
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->cardID = $request->input('cardID');
-        $user->studentID = $request->input('studentID');
+        $user->studentID = ucfirst($request->input('studentID'));
         $user->save();
         return redirect('users');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $user = User::findOrFail($id);
         $user->delete();
 
