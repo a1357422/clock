@@ -79,6 +79,23 @@ class UsersController extends Controller
         return view('users.edit', ['login' => $login, 'edituser' => 1, 'user' => $user, 'selectName' => $selectName, 'selectCardID' => $selectCardID, 'selectStudentID' => $selectStudentID]);
     }
 
+    public function editpwd($id)
+    {
+        $login = Auth::check();
+        $user = User::findOrFail($id);
+        return view('users.editpwd', ['login' => $login, 'user' => $user]);
+    }
+
+    public function updatepwd($id, Request $request)
+    {
+        $user = User::findOrFail($id);
+        $user->name = $request->input('name');
+        $user->username = $request->input('username');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        return redirect('users');
+    }
+
     public function update($id, CreateUserRequest $request)
     {
         $user = User::findOrFail($id);
