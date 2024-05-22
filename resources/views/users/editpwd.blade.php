@@ -1,4 +1,4 @@
-@if ($login == true)
+@if ($login == true && $user->id == Auth::user()->id)
 @extends('app')
 
 @section('title', '修改資料')
