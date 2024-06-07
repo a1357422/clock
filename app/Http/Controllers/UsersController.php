@@ -51,24 +51,6 @@ class UsersController extends Controller
         return redirect('users');
     }
 
-    public function hide($id)
-    {
-        $user = User::findOrFail($id);
-        $user->hidden = 1;
-        $user->save();
-        return back();
-    }
-
-    public function unhide()
-    {
-        $users = User::OrderBy('id', 'asc')->get();
-        foreach ($users as $user) {
-            $user->hidden = 0;
-            $user->save();
-        }
-        return back();
-    }
-
     public function edituser($id)
     {
         $login = Auth::check();
