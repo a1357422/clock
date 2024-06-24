@@ -25,7 +25,7 @@
 </script>
 @extends('app')
 
-@section('title', '新增資料')
+@section('title', '衛保打卡系統')
 
 @section('dormitorysystem_theme', '新增打卡資料系統')
 

@@ -3,3 +3,7 @@
 app/Http/Controllers/DownloaddbController.php
 public/error.txt
 public/error.txt
+public/ssl/chihhao-weibao.ddns.net-chain-only.pem
+public/ssl/chihhao-weibao.ddns.net-chain.pem
+public/ssl/chihhao-weibao.ddns.net-crt.pem
+public/ssl/chihhao-weibao.ddns.net-key.pem
