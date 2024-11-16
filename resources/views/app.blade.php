@@ -57,7 +57,8 @@
 
         body {
 
-            background-color: #d7d2d3;
+            background-color: #FFFFFF;
+            /* background-color: #d7d2d3; */
             /*背景顏色*/
             font-family: "微黑正軟體", sans-serif;
             margin: 0 auto;

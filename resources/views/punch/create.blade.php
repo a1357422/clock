@@ -182,25 +182,32 @@
     @endforeach
 </table>
 <div>
-    @if ($punches != "[]")
+    @if ($punches != "[]" && date('N')!="1")
     @foreach($punches as $punch)
     @if($punch->date)
     @if(date('N', strtotime($punch->date))=="1")
-    <font color=gray><a href="#" class="btn btn-secondary" disabled>上一天</a></font>
-    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
+    <font><a href="#" class="btn btn-secondary" disabled>上一天</a></font>
+    <font><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
+    <font><a href="{{ route('punch.create') }}" class="btn btn-info">回今天</a></font>
     @break
     @else
-    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-warning">上一天</a></font>
+    <font><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' -1 day')))]) }}" class="btn btn-warning">上一天</a></font>
     @if($punch->date == date('n/j'))
     @else
-    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
+    <font><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($punch->date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
     @endif
     @break
     @endif
     @endif
     @endforeach
+    @elseif(date('N')!="1")
+    @if(date('m/d') == $date)
+    <font><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('md', strtotime($date.' -1 day') ))]) }}" class="btn btn-warning">上一天</a></font>
     @else
-    <font color=blue><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('md', strtotime(date('md').' -1 day') ))]) }}" class="btn btn-warning">上一天</a></font>
+    <font><a href="{{ route('punch.date',['date'=>str_replace('/', '',date('md', strtotime($date.' -1 day') ))]) }}" class="btn btn-warning">上一天</a></font>
+    <font><a href="{{ route('punch.date',['date'=>str_replace('/', '', date('md',strtotime($date.' +1 day')))]) }}" class="btn btn-warning">下一天</a></font>
+    @endif
+    @else
     @endif
 </div>
 @endsection

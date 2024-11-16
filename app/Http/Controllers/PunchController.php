@@ -379,6 +379,7 @@ class PunchController extends Controller
     {
         $warns = [];
         $date = DateTime::createFromFormat('md', $date);
+        $urldate = $date->format('m/d');
         $date = $date->format('n/j');
         $punches = Punch::Where('year', date('Y'))->Where('date', $date)->latest()->get();
         $old_punches = Punch::Where('year', date('Y'))->Where('date', '<>', $date)->latest()->get();
@@ -401,7 +402,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1, 'warns' => $warns]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 1, 'warns' => $warns, 'date' => $urldate]);
     }
 
     public function create()
@@ -427,7 +428,7 @@ class PunchController extends Controller
                 continue;
             $tags["$user->id"] = $user->name;
         }
-        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0, 'warns' => $warns]);
+        return view('punch.create', ['punches' => $punches, 'tags' => $tags, 'state' => 0, 'warns' => $warns, 'date' => date('m/d')]);
     }
 
     public function createuserdata()
